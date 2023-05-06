@@ -2,6 +2,8 @@ import express from 'express'
 import 'express-async-errors'
 import { json } from 'body-parser'
 import cors from 'cors'
+import { errHandler } from './middlewares/err-handler'
+import { exampleRouter } from './routers/example/router'
 
 const app = express()
 app.use(
@@ -11,8 +13,8 @@ app.use(
 )
 app.use(json())
 
-app.use('/', (req, res) => {
-  return res.status(200).send('ok')
-})
+app.use('/api/example', exampleRouter)
+
+app.use(errHandler)
 
 export { app }
