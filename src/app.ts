@@ -3,7 +3,7 @@ import 'express-async-errors'
 import { json } from 'body-parser'
 import cors from 'cors'
 import { errHandler } from './middlewares/err-handler'
-import { exampleRouter } from './routers/example/router'
+import { productRouter } from './routers/product/router'
 
 const app = express()
 app.use(
@@ -13,7 +13,7 @@ app.use(
 )
 app.use(json())
 
-app.use('/api/example', exampleRouter)
+app.use('/api/example', productRouter)
 
 app.use(errHandler)
 
