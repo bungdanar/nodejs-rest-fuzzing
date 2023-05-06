@@ -13,7 +13,7 @@ app.use(
 )
 app.use(json())
 
-app.use('/api/example', productRouter)
+app.use('/api/product', productRouter)
 
 app.use(errHandler)
 
