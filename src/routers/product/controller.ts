@@ -4,7 +4,9 @@ import { NotFoundError } from '../../errors/not-found-err'
 
 export class ProductController {
   static getAll = async (req: Request, res: Response) => {
-    const products = await prisma.product.findMany()
+    const products = await prisma.product.findMany({
+      where: req.query,
+    })
     return res.status(200).send(products)
   }
 
