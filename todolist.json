@@ -12,7 +12,7 @@
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/license/mit/"
-    } 
+    }
   },
   "servers": [
     {
@@ -43,7 +43,9 @@
             "TodolistAuth": []
           }
         ],
-        "tags": ["Todolist"],
+        "tags": [
+          "Todolist"
+        ],
         "summary": "Get all todolist",
         "description": "Get all active todolist by default",
         "parameters": [
@@ -98,7 +100,8 @@
                         "name": "Learning Java",
                         "priority": 3,
                         "tags": [
-                          "Java", "Programming"
+                          "Java",
+                          "Programming"
                         ]
                       },
                       {
@@ -106,7 +109,8 @@
                         "name": "Learning PHP",
                         "priority": 2,
                         "tags": [
-                          "PHP", "Programming"
+                          "PHP",
+                          "Programming"
                         ]
                       }
                     ]
@@ -123,7 +127,9 @@
             "TodolistAuth": []
           }
         ],
-        "tags": ["Todolist"],
+        "tags": [
+          "Todolist"
+        ],
         "summary": "Create new todolist",
         "description": "Create new todolist to database",
         "requestBody": {
@@ -140,7 +146,8 @@
                     "name": "Learning Java",
                     "priority": 3,
                     "tags": [
-                      "Java", "Programming"
+                      "Java",
+                      "Programming"
                     ]
                   }
                 },
@@ -150,7 +157,8 @@
                     "name": "Learning PHP",
                     "priority": 2,
                     "tags": [
-                      "PHP", "Programming"
+                      "PHP",
+                      "Programming"
                     ]
                   }
                 }
@@ -169,12 +177,13 @@
                 "examples": {
                   "success": {
                     "description": "Example for successfully create todolist",
-                    "value":  {
+                    "value": {
                       "id": "1",
                       "name": "Learning Java",
                       "priority": 3,
                       "tags": [
-                        "Java", "Programming"
+                        "Java",
+                        "Programming"
                       ]
                     }
                   }
@@ -192,7 +201,9 @@
             "TodolistAuth": []
           }
         ],
-        "tags": ["Todolist"],
+        "tags": [
+          "Todolist"
+        ],
         "summary": "Update existing todolist",
         "description": "Update existing todolist in database",
         "parameters": [
@@ -214,7 +225,8 @@
                     "name": "Learning Java",
                     "priority": 3,
                     "tags": [
-                      "Java", "Programming"
+                      "Java",
+                      "Programming"
                     ]
                   }
                 },
@@ -224,7 +236,8 @@
                     "name": "Learning PHP",
                     "priority": 2,
                     "tags": [
-                      "PHP", "Programming"
+                      "PHP",
+                      "Programming"
                     ]
                   }
                 }
@@ -243,12 +256,13 @@
                 "examples": {
                   "success": {
                     "description": "Example for successfully update todolist",
-                    "value":  {
+                    "value": {
                       "id": "1",
                       "name": "Learning Java",
                       "priority": 3,
                       "tags": [
-                        "Java", "Programming"
+                        "Java",
+                        "Programming"
                       ]
                     }
                   }
@@ -264,7 +278,9 @@
             "TodolistAuth": []
           }
         ],
-        "tags": ["Todolist"],
+        "tags": [
+          "Todolist"
+        ],
         "summary": "Delete existing todolist",
         "description": "Delete existing todolist in database",
         "parameters": [
