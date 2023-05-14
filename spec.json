@@ -197,58 +197,59 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "sku",
+                  "regular_price",
+                  "discount_price",
+                  "quantity",
+                  "description",
+                  "weight",
+                  "note"
+                ],
                 "properties": {
                   "name": {
                     "type": "string",
-                    "required": true,
                     "minLength": 3,
                     "maxLength": 255
                   },
                   "sku": {
                     "type": "string",
-                    "required": true,
                     "minLength": 3,
                     "maxLength": 255
                   },
                   "regular_price": {
                     "type": "number",
-                    "required": true,
                     "format": "decimal",
                     "minimum": 0
                   },
                   "discount_price": {
                     "type": "number",
-                    "required": true,
                     "format": "decimal",
                     "minimum": 0
                   },
                   "quantity": {
                     "type": "integer",
-                    "required": true,
                     "format": "int32",
                     "minimum": 0
                   },
                   "description": {
                     "type": "string",
-                    "required": true,
                     "minLength": 3,
                     "maxLength": 1000
                   },
                   "weight": {
                     "type": "number",
-                    "required": true,
                     "format": "float",
                     "minimum": 0
                   },
                   "note": {
                     "type": "string",
-                    "required": true,
                     "minLength": 3,
                     "maxLength": 255
                   },
                   "published": {
                     "type": "boolean",
-                    "required": false,
                     "default": false
                   }
                 }
