@@ -11,12 +11,12 @@ datasource db {
 }
 
 model Product {
-  id             Int      @id @default(autoincrement())
+  id             Int      @id @default(autoincrement()) @db.UnsignedInt
   name           String   @db.VarChar(255)
   sku            String   @db.VarChar(255)
   regular_price  Decimal  @db.Decimal(19, 4)
   discount_price Decimal  @db.Decimal(19, 4)
-  quantity       Int
+  quantity       Int      @db.UnsignedInt
   description    String   @db.VarChar(1000)
   weight         Float
   note           String   @db.VarChar(255)
