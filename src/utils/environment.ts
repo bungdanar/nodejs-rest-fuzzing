@@ -1,3 +1,7 @@
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 interface AppEnv {
   readonly NODE_ENV: string
   readonly PORT: string

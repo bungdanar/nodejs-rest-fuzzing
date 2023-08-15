@@ -1,15 +1,22 @@
-import { product, category, coupon } from '@prisma/client'
+import {
+  CategoryAttributes,
+  CouponAttributes,
+  ProductAttributes,
+} from '../models/init-models'
 
-type CategoryCreatePayload = Pick<category, 'name' | 'description'>
+type CategoryCreatePayload = Pick<CategoryAttributes, 'name' | 'description'>
 
-type CouponCreatePayload = Omit<coupon, 'id' | 'created_at' | 'updated_at'> &
-  Partial<Pick<coupon, 'times_used'>>
+type CouponCreatePayload = Omit<
+  CouponAttributes,
+  'id' | 'created_at' | 'updated_at'
+> &
+  Partial<Pick<CouponAttributes, 'times_used'>>
 
 export type ProductCreatePayload = Omit<
-  product,
+  ProductAttributes,
   'id' | 'published' | 'created_at' | 'updated_at'
 > &
-  Partial<Pick<product, 'published'>>
+  Partial<Pick<ProductAttributes, 'published'>>
 
 export type ProductWithTagCategoryCreatePayload = ProductCreatePayload & {
   tags: string[]
