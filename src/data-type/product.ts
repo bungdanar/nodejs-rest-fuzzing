@@ -4,9 +4,12 @@ import {
   ProductAttributes,
 } from '../models/init-models'
 
-type CategoryCreatePayload = Pick<CategoryAttributes, 'name' | 'description'>
+export type CategoryCreatePayload = Pick<
+  CategoryAttributes,
+  'name' | 'description'
+>
 
-type CouponCreatePayload = Omit<
+export type CouponCreatePayload = Omit<
   CouponAttributes,
   'id' | 'created_at' | 'updated_at'
 > &
