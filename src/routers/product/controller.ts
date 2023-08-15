@@ -1,13 +1,10 @@
 import { Request, Response } from 'express'
-import { ProductCreatePayload } from '../../data-type/product'
-import { Product } from '../../models/init-models'
+import { ProductService } from '../../utils/product-service'
 
 export class ProductController {
   static create = async (req: Request, res: Response) => {
-    const payload = req.body as ProductCreatePayload
+    const product = await ProductService.create(req.body, null)
 
-    const product = await Product.create(payload)
-
-    return res.status(200).send(product)
+    return res.status(201).send(product)
   }
 }

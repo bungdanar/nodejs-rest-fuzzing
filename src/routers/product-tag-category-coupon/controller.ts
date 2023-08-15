@@ -1,44 +1,15 @@
 import { Request, Response } from 'express'
-import { ProductTagCategoryCouponCreatePayload } from '../../data-type/product'
 import { Database } from '../../utils/database'
-import { Product } from '../../models/product'
+import { ProductService } from '../../utils/product-service'
 
 export class ProductTagCategoryCouponController {
   static create = async (req: Request, res: Response) => {
-    const {
-      tags: tagsPayload,
-      categories: categoriesPayload,
-      coupons: couponsPayload,
-      ...productPayload
-    } = req.body as ProductTagCategoryCouponCreatePayload
-
     const transaction = await Database.getTransaction()
+
     try {
-      // Create product
-      const createdProduct = await Product.create(
-        {
-          ...productPayload,
-          // @ts-ignore
-          tags: tagsPayload.map((t) => ({ name: t })),
-          // @ts-ignore
-          categories: categoriesPayload,
-          // @ts-ignore
-          coupons: couponsPayload,
-        },
-        {
-          transaction,
-          include: [
-            {
-              association: Product.associations.tags,
-            },
-            {
-              association: Product.associations.categories,
-            },
-            {
-              association: Product.associations.coupons,
-            },
-          ],
-        }
+      const createdProduct = await ProductService.createWithTagCategoryCoupon(
+        req.body,
+        transaction
       )
 
       await transaction.commit()
