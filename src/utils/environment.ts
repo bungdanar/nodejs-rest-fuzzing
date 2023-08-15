@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 interface AppEnv {
+  readonly VALIDATION: string
   readonly NODE_ENV: string
   readonly PORT: string
   readonly DB_HOST: string
@@ -13,7 +14,16 @@ interface AppEnv {
 }
 
 export class Environment {
+  private static readonly ALLOWED_VALIDATION_MODE = [
+    'no',
+    'joi-partial',
+    'joi-full',
+    'zod-partial',
+    'zod-full',
+  ]
+
   static readonly APP_ENV: AppEnv = {
+    VALIDATION: process.env.VALIDATION!,
     NODE_ENV: process.env.NODE_ENV!,
     PORT: process.env.PORT!,
     DB_HOST: process.env.DB_HOST!,
@@ -36,6 +46,14 @@ export class Environment {
       if (!this.APP_ENV[key as keyof AppEnv]) {
         this.throwEnvErrMsg(key)
       }
+    }
+
+    if (
+      !this.ALLOWED_VALIDATION_MODE.includes(
+        this.APP_ENV.VALIDATION.toLowerCase()
+      )
+    ) {
+      throw new Error('Validation mode is not valid')
     }
   }
 }
