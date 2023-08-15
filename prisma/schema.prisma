@@ -3,11 +3,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model category {
   id               Int                @id @default(autoincrement()) @db.UnsignedInt
   name             String             @db.VarChar(255)
   description      String             @db.VarChar(1000)
-  active           Boolean
+  active           Boolean            @default(true)
   created_at       DateTime           @default(now()) @db.DateTime(0)
   updated_at       DateTime           @default(now()) @db.DateTime(0)
   product_category product_category[]
