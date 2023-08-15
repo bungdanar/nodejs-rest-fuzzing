@@ -14,16 +14,22 @@ type CouponCreatePayload = Omit<
 
 export type ProductCreatePayload = Omit<
   ProductAttributes,
-  'id' | 'published' | 'created_at' | 'updated_at'
+  | 'id'
+  | 'published'
+  | 'created_at'
+  | 'updated_at'
+  | 'tags'
+  | 'categories'
+  | 'coupons'
 > &
   Partial<Pick<ProductAttributes, 'published'>>
 
-export type ProductWithTagCategoryCreatePayload = ProductCreatePayload & {
+export type ProductTagCategoryCreatePayload = ProductCreatePayload & {
   tags: string[]
   category: CategoryCreatePayload
 }
 
-export type ProductWithTagCategoryCouponCreatePayload = ProductCreatePayload & {
+export type ProductTagCategoryCouponCreatePayload = ProductCreatePayload & {
   tags: string[]
   categories: CategoryCreatePayload[]
   coupons: CouponCreatePayload[]

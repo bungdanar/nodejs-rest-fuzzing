@@ -1,5 +1,8 @@
 import * as Sequelize from 'sequelize'
-import { DataTypes, Model, Optional } from 'sequelize'
+import { Association, DataTypes, Model, Optional } from 'sequelize'
+import { Tag, TagAttributes } from './tag'
+import { Category, CategoryAttributes } from './category'
+import { Coupon, CouponAttributes } from './coupon'
 
 export interface ProductAttributes {
   id: number
@@ -14,6 +17,10 @@ export interface ProductAttributes {
   published: number
   created_at: Date
   updated_at: Date
+
+  tags?: TagAttributes[]
+  categories?: CategoryAttributes[]
+  coupons?: CouponAttributes[]
 }
 
 export type ProductPk = 'id'
@@ -23,6 +30,9 @@ export type ProductOptionalAttributes =
   | 'published'
   | 'created_at'
   | 'updated_at'
+  | 'tags'
+  | 'categories'
+  | 'coupons'
 export type ProductCreationAttributes = Optional<
   ProductAttributes,
   ProductOptionalAttributes
@@ -44,6 +54,16 @@ export class Product
   published!: number
   created_at!: Date
   updated_at!: Date
+
+  tags?: Tag[]
+  categories?: Category[]
+  coupons?: Coupon[]
+
+  static associations: {
+    tags: Association<Product, Tag>
+    categories: Association<Product, Category>
+    coupons: Association<Product, Coupon>
+  }
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Product {
     return Product.init(
