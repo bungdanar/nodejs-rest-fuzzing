@@ -1,5 +1,6 @@
 import Joi from 'joi'
 import { ProductCreatePayload } from '../../data-type/product'
+import { z } from 'zod'
 
 export class ProductValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
@@ -36,5 +37,42 @@ export class ProductValidator {
     })
 
     return schema.validate(payload)
+  }
+
+  static partialValidateCreatePayloadWithZod = (payload: any) => {
+    const schema = z.object({
+      name: z.string(),
+      sku: z.string(),
+      regular_price: z.coerce.number(),
+      discount_price: z.coerce.number(),
+      quantity: z.coerce.number().int(),
+      description: z.string(),
+      weight: z.coerce.number(),
+      note: z.string(),
+      published: z.coerce.boolean().optional(),
+    })
+
+    return schema.safeParse(payload)
+  }
+
+  static fullValidateCreatePayloadWithZod = (payload: any) => {
+    const schema = z
+      .object({
+        name: z.string().max(255),
+        sku: z.string().max(255),
+        regular_price: z.coerce.number().nonnegative(),
+        discount_price: z.coerce.number().nonnegative(),
+        quantity: z.coerce.number().int().nonnegative().lte(9999),
+        description: z.string().max(1000),
+        weight: z.coerce.number().nonnegative().lte(1000),
+        note: z.string().max(255),
+        published: z.coerce.boolean().optional(),
+      })
+      .refine((data) => data.discount_price <= data.regular_price, {
+        path: ['discount_price'],
+        message: 'Must be less than or equal to regular_price',
+      })
+
+    return schema.safeParse(payload)
   }
 }

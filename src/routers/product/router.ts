@@ -16,6 +16,16 @@ switch (Environment.APP_ENV.VALIDATION) {
     break
   }
 
+  case VALIDATION_MODE.ZOD_PARTIAL: {
+    router.post('/', ProductController.createWithPartialZodValidation)
+    break
+  }
+
+  case VALIDATION_MODE.ZOD_FULL: {
+    router.post('/', ProductController.createWithFullZodValidation)
+    break
+  }
+
   default: {
     router.post('/', ProductController.create)
     break

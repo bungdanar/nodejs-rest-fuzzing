@@ -24,8 +24,9 @@ export type ProductCreatePayload = Omit<
   | 'tags'
   | 'categories'
   | 'coupons'
-> &
-  Partial<Pick<ProductAttributes, 'published'>>
+> & {
+  published?: number | boolean | undefined
+}
 
 export type ProductTagCategoryCreatePayload = ProductCreatePayload & {
   tags: string[]

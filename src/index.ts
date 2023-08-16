@@ -21,6 +21,9 @@ const start = async () => {
     console.log('Connected to database')
 
     console.log(`App has been lifted at ${new Date()}`)
+    console.log(
+      `App is running with validation mode: ${Environment.APP_ENV.VALIDATION}`
+    )
   } catch (error) {
     console.error(getErrorMessage(error))
     process.exit(1)

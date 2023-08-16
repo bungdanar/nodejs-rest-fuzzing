@@ -14,7 +14,7 @@ export interface ProductAttributes {
   description: string
   weight: number
   note: string
-  published: number
+  published: number | boolean
   created_at: Date
   updated_at: Date
 
@@ -51,7 +51,7 @@ export class Product
   description!: string
   weight!: number
   note!: string
-  published!: number
+  published!: number | boolean
   created_at!: Date
   updated_at!: Date
 
