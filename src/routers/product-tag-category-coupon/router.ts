@@ -22,6 +22,22 @@ switch (Environment.APP_ENV.VALIDATION) {
     break
   }
 
+  case VALIDATION_MODE.ZOD_PARTIAL: {
+    router.post(
+      '/',
+      ProductTagCategoryCouponController.createWithPartialZodValidation
+    )
+    break
+  }
+
+  case VALIDATION_MODE.ZOD_FULL: {
+    router.post(
+      '/',
+      ProductTagCategoryCouponController.createWithFullZodValidation
+    )
+    break
+  }
+
   default: {
     router.post('/', ProductTagCategoryCouponController.create)
     break

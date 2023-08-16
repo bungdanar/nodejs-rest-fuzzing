@@ -11,7 +11,7 @@ export type CategoryCreatePayload = Pick<
 
 export type CouponCreatePayload = Omit<
   CouponAttributes,
-  'id' | 'created_at' | 'updated_at'
+  'id' | 'created_at' | 'updated_at' | 'times_used'
 > &
   Partial<Pick<CouponAttributes, 'times_used'>>
 

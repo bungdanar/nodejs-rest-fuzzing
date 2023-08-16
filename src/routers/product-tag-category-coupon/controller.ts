@@ -3,6 +3,7 @@ import { Database } from '../../utils/database'
 import { ProductService } from '../../utils/product-service'
 import { ProductTagCategoryCouponValidator } from './validator'
 import { JoiValidationError } from '../../errors/joi-validation-err'
+import { ZodValidationError } from '../../errors/zod-validation-err'
 
 export class ProductTagCategoryCouponController {
   static create = async (req: Request, res: Response) => {
@@ -60,6 +61,57 @@ export class ProductTagCategoryCouponController {
     try {
       const product = await ProductService.createWithTagCategoryCoupon(
         value,
+        transaction
+      )
+
+      await transaction.commit()
+      return res.status(201).send(product)
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+
+  static createWithPartialZodValidation = async (
+    req: Request,
+    res: Response
+  ) => {
+    const validationResult =
+      ProductTagCategoryCouponValidator.partialValidateCreatePayloadWithZod(
+        req.body
+      )
+
+    if (!validationResult.success)
+      throw new ZodValidationError(validationResult.error)
+
+    const transaction = await Database.getTransaction()
+    try {
+      const product = await ProductService.createWithTagCategoryCoupon(
+        validationResult.data,
+        transaction
+      )
+
+      await transaction.commit()
+      return res.status(201).send(product)
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+
+  static createWithFullZodValidation = async (req: Request, res: Response) => {
+    const validationResult =
+      ProductTagCategoryCouponValidator.fullValidateCreatePayloadWithZod(
+        req.body
+      )
+
+    if (!validationResult.success)
+      throw new ZodValidationError(validationResult.error)
+
+    const transaction = await Database.getTransaction()
+    try {
+      const product = await ProductService.createWithTagCategoryCoupon(
+        validationResult.data,
         transaction
       )
 
