@@ -7,7 +7,7 @@
     "contact": {
       "name": "Danar Gumilang Putera",
       "email": "danar.g.putera@gmail.com",
-      "url": "https://github.com/bungdanar/nodejs-rest-fuzzing"
+      "url": "https://github.com/bungdanar"
     },
     "license": {
       "name": "MIT",
@@ -21,8 +21,8 @@
     }
   ],
   "externalDocs": {
-    "url": "https://github.com/bungdanar/nodejs-rest-fuzzing",
-    "description": "Experimental RESTful API Server Written in NodeJs"
+    "url": "https://github.com/bungdanar",
+    "description": "Experimental RESTful API Server Written in NodeJs and Python"
   },
   "paths": {
     "/product": {
