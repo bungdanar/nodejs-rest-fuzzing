@@ -37,6 +37,14 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ProductCreatePayload"
+              },
+              "examples": {
+                "CorrectProductCreatePayload": {
+                  "$ref": "#/components/examples/CorrectProductCreatePayload"
+                },
+                "IncorrectProductCreatePayload": {
+                  "$ref": "#/components/examples/IncorrectProductCreatePayload"
+                }
               }
             }
           }
@@ -87,6 +95,14 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ProductTagCategoryCreatePayload"
+              },
+              "examples": {
+                "CorrectProductTagCategoryCreatePayload": {
+                  "$ref": "#/components/examples/CorrectProductTagCategoryCreatePayload"
+                },
+                "IncorrectProductTagCategoryCreatePayload": {
+                  "$ref": "#/components/examples/IncorrectProductTagCategoryCreatePayload"
+                }
               }
             }
           }
@@ -137,6 +153,14 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ProductTagCategoryCouponCreatePayload"
+              },
+              "examples": {
+                "CorrectProductTagCategoryCouponCreatePayload": {
+                  "$ref": "#/components/examples/CorrectProductTagCategoryCouponCreatePayload"
+                },
+                "IncorrectProductTagCategoryCouponCreatePayload": {
+                  "$ref": "#/components/examples/IncorrectProductTagCategoryCouponCreatePayload"
+                }
               }
             }
           }
@@ -557,6 +581,160 @@
           "message": {
             "type": "string"
           }
+        }
+      }
+    },
+    "examples": {
+      "CorrectProductCreatePayload": {
+        "description": "Create a new product with correct input data",
+        "value": {
+          "name": "Sepatu Sketcher Hiking",
+          "sku": "xxx333yyy",
+          "regular_price": 80000,
+          "discount_price": 80000,
+          "quantity": 1000,
+          "description": "Sepatu Outdoor",
+          "weight": 1000,
+          "note": "Hiking",
+          "published": true
+        }
+      },
+      "IncorrectProductCreatePayload": {
+        "description": "Create a new product with incorrect input data",
+        "value": {
+          "name": "Se",
+          "sku": "xx",
+          "regular_price": -80000,
+          "discount_price": -80000,
+          "quantity": -1000,
+          "description": "Se",
+          "weight": -1000,
+          "note": "Hi",
+          "published": "Yes publish"
+        }
+      },
+      "CorrectProductTagCategoryCreatePayload": {
+        "description": "Create a new product with its tags and category with correct input data",
+        "value": {
+          "name": "Sepatu Sketcher Hiking",
+          "sku": "xxx333yyy",
+          "regular_price": 80000,
+          "discount_price": 80000,
+          "quantity": 1000,
+          "description": "Sepatu Outdoor",
+          "weight": 1000,
+          "note": "Hiking",
+          "published": true,
+          "tags": [
+            "tag1",
+            "tag2"
+          ],
+          "category": {
+            "name": "Sepatu",
+            "description": "Deskripsi sepatu"
+          }
+        }
+      },
+      "IncorrectProductTagCategoryCreatePayload": {
+        "description": "Create a new product with its tags and category with incorrect input data",
+        "value": {
+          "name": "Se",
+          "sku": "xx",
+          "regular_price": -80000,
+          "discount_price": -80000,
+          "quantity": -1000,
+          "description": "Se",
+          "weight": -1000,
+          "note": "Hi",
+          "published": "Yes publish",
+          "tags": [
+            "ta",
+            "ta"
+          ],
+          "category": {
+            "name": "Se",
+            "description": "De"
+          }
+        }
+      },
+      "CorrectProductTagCategoryCouponCreatePayload": {
+        "description": "Create a new product with its tags, categories, and coupons with correct input data",
+        "value": {
+          "name": "Sepatu Sketcher Hiking",
+          "sku": "xxx333yyy",
+          "regular_price": 80000,
+          "discount_price": 80000,
+          "quantity": 1000,
+          "description": "Sepatu Outdoor",
+          "weight": 1000,
+          "note": "Hiking",
+          "published": true,
+          "tags": [
+            "tag1",
+            "tag2"
+          ],
+          "categories": [
+            {
+              "name": "Sepatu 1",
+              "description": "Deskripsi sepatu"
+            },
+            {
+              "name": "Sepatu 2",
+              "description": "Deskripsi sepatu"
+            }
+          ],
+          "coupons": [
+            {
+              "code": "HUT RI",
+              "description": "HUT RI",
+              "discount_value": 25,
+              "discount_type": "Potongan",
+              "times_used": 10,
+              "max_usage": 10,
+              "start_date": "2023-08-17",
+              "end_date": "2023-08-19"
+            }
+          ]
+        }
+      },
+      "IncorrectProductTagCategoryCouponCreatePayload": {
+        "description": "Create a new product with its tags, categories, and coupons with incorrect input data",
+        "value": {
+          "name": "Se",
+          "sku": "xx",
+          "regular_price": -80000,
+          "discount_price": -80000,
+          "quantity": -1000,
+          "description": "Se",
+          "weight": -1000,
+          "note": "Hi",
+          "published": "Yes publish",
+          "tags": [
+            "ta",
+            "ta"
+          ],
+          "categories": [
+            {
+              "name": "Se",
+              "description": "De"
+            },
+            {
+              "name": "Se",
+              "description": "De"
+            }
+          ],
+          "coupons": [
+            {
+              "code": "HU",
+              "description": "HU",
+              "discount_value": 2500,
+              "discount_type": "Po",
+              "times_used": -10,
+              "max_usage": -10,
+              "start_date": "Tanggal Awal",
+              "end_date": "Tanggal Akhir"
+            }
+          ]
         }
       }
     }
