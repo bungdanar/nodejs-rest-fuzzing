@@ -233,7 +233,8 @@
           "discount_price": {
             "type": "number",
             "format": "float",
-            "minimum": 0
+            "minimum": 0,
+            "description": "Must be less than or equal to regular_price"
           },
           "quantity": {
             "type": "integer",
@@ -327,7 +328,8 @@
             "type": "integer",
             "format": "int32",
             "minimum": 0,
-            "default": 0
+            "default": 0,
+            "description": "Must be less than or equal to max_usage"
           },
           "max_usage": {
             "type": "integer",
@@ -340,7 +342,8 @@
           },
           "end_date": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Must be greater than or equal to start_date"
           }
         }
       },
