@@ -21,8 +21,8 @@ export class ProductValidator {
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductCreatePayload>({
-      name: Joi.string().max(255).required(),
-      sku: Joi.string().max(255).required(),
+      name: Joi.string().min(3).max(255).required(),
+      sku: Joi.string().min(3).max(255).required(),
       regular_price: Joi.number().precision(4).min(0).required(),
       discount_price: Joi.number()
         .precision(4)
@@ -30,9 +30,9 @@ export class ProductValidator {
         .max(Joi.ref('regular_price'))
         .required(),
       quantity: Joi.number().integer().min(0).max(9999).required(),
-      description: Joi.string().max(1000).required(),
+      description: Joi.string().min(3).max(1000).required(),
       weight: Joi.number().precision(4).min(0).max(1000).required(),
-      note: Joi.string().max(255).required(),
+      note: Joi.string().min(3).max(255).required(),
       published: Joi.boolean(),
     })
 
@@ -58,14 +58,14 @@ export class ProductValidator {
   static fullValidateCreatePayloadWithZod = (payload: any) => {
     const schema = z
       .object({
-        name: z.string().max(255),
-        sku: z.string().max(255),
+        name: z.string().min(3).max(255),
+        sku: z.string().min(3).max(255),
         regular_price: z.coerce.number().nonnegative(),
         discount_price: z.coerce.number().nonnegative(),
         quantity: z.coerce.number().int().nonnegative().lte(9999),
-        description: z.string().max(1000),
+        description: z.string().min(3).max(1000),
         weight: z.coerce.number().nonnegative().lte(1000),
-        note: z.string().max(255),
+        note: z.string().min(3).max(255),
         published: z.coerce.boolean().optional(),
       })
       .refine((data) => data.discount_price <= data.regular_price, {

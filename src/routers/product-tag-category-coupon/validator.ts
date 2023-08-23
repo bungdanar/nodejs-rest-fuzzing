@@ -48,8 +48,8 @@ export class ProductTagCategoryCouponValidator {
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCouponCreatePayload>({
-      name: Joi.string().max(255).required(),
-      sku: Joi.string().max(255).required(),
+      name: Joi.string().min(3).max(255).required(),
+      sku: Joi.string().min(3).max(255).required(),
       regular_price: Joi.number().precision(4).min(0).required(),
       discount_price: Joi.number()
         .precision(4)
@@ -57,30 +57,32 @@ export class ProductTagCategoryCouponValidator {
         .max(Joi.ref('regular_price'))
         .required(),
       quantity: Joi.number().integer().min(0).max(9999).required(),
-      description: Joi.string().max(1000).required(),
+      description: Joi.string().min(3).max(1000).required(),
       weight: Joi.number().precision(4).min(0).max(1000).required(),
-      note: Joi.string().max(255).required(),
+      note: Joi.string().min(3).max(255).required(),
       published: Joi.boolean(),
-      tags: Joi.array().items(Joi.string().max(255).required()).required(),
+      tags: Joi.array()
+        .items(Joi.string().min(3).max(255).required())
+        .required(),
       categories: Joi.array()
         .items(
           Joi.object<CategoryCreatePayload>({
-            name: Joi.string().max(255).required(),
-            description: Joi.string().max(1000).required(),
+            name: Joi.string().min(3).max(255).required(),
+            description: Joi.string().min(3).max(1000).required(),
           }).required()
         )
         .required(),
       coupons: Joi.array()
         .items(
           Joi.object<CouponCreatePayload>({
-            code: Joi.string().max(255).required(),
-            description: Joi.string().max(1000).required(),
+            code: Joi.string().min(3).max(255).required(),
+            description: Joi.string().min(3).max(1000).required(),
             discount_value: Joi.number()
               .precision(2)
               .min(0)
               .max(100)
               .required(),
-            discount_type: Joi.string().max(255).required(),
+            discount_type: Joi.string().min(3).max(255).required(),
             times_used: Joi.number().integer().min(0).max(Joi.ref('max_usage')),
             max_usage: Joi.number().integer().min(0).required(),
             start_date: Joi.date().iso().required(),
@@ -135,21 +137,21 @@ export class ProductTagCategoryCouponValidator {
   static fullValidateCreatePayloadWithZod = (payload: any) => {
     const schema = z
       .object({
-        name: z.string().max(255),
-        sku: z.string().max(255),
+        name: z.string().min(3).max(255),
+        sku: z.string().min(3).max(255),
         regular_price: z.coerce.number().nonnegative(),
         discount_price: z.coerce.number().nonnegative(),
         quantity: z.coerce.number().int().nonnegative().lte(9999),
-        description: z.string().max(1000),
+        description: z.string().min(3).max(1000),
         weight: z.coerce.number().nonnegative().lte(1000),
-        note: z.string().max(255),
+        note: z.string().min(3).max(255),
         published: z.coerce.boolean().optional(),
-        tags: z.array(z.string().max(255)).nonempty(),
+        tags: z.array(z.string().min(3).max(255)).nonempty(),
         categories: z
           .array(
             z.object({
-              name: z.string().max(255),
-              description: z.string().max(1000),
+              name: z.string().min(3).max(255),
+              description: z.string().min(3).max(1000),
             })
           )
           .nonempty(),
@@ -157,10 +159,10 @@ export class ProductTagCategoryCouponValidator {
           .array(
             z
               .object({
-                code: z.string().max(255),
-                description: z.string().max(1000),
+                code: z.string().min(3).max(255),
+                description: z.string().min(3).max(1000),
                 discount_value: z.coerce.number().nonnegative().lte(100),
-                discount_type: z.string().max(255),
+                discount_type: z.string().min(3).max(255),
                 times_used: z.coerce.number().int().nonnegative().optional(),
                 max_usage: z.coerce.number().int().nonnegative(),
                 start_date: z.coerce.date(),
