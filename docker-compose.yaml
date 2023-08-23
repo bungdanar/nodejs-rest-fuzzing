@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web-api:
+    image: bungdanar/nodejs-rest-fuzzing
+    environment:
+      - TZ=Asia/Jakarta
+    restart: 'no'
+    build: ./
+    volumes:
+      - './logs:/usr/src/app/logs'
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
