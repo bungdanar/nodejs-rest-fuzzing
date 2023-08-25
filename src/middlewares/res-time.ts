@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { resTimeLogger } from '../utils/logger'
+import { resTimeLogger, resTimeWithReqBodyLogger } from '../utils/logger'
 import { Environment } from '../utils/environment'
 
 export const resTime = (req: Request, res: Response, next: NextFunction) => {
@@ -8,6 +8,14 @@ export const resTime = (req: Request, res: Response, next: NextFunction) => {
 
     resTimeLogger.info(
       `${req.method} ${req.originalUrl} ${res.statusCode} ${responseTime} validation=${Environment.APP_ENV.VALIDATION}`
+    )
+
+    resTimeWithReqBodyLogger.info(
+      `${req.method} ${req.originalUrl} ${
+        res.statusCode
+      } ${responseTime} validation=${
+        Environment.APP_ENV.VALIDATION
+      } payload=${JSON.stringify(req.body)}`
     )
   })
 
