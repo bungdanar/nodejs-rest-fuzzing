@@ -1,4 +1,6 @@
 import type { Sequelize } from 'sequelize'
+import { Address as _Address } from './address'
+import type { AddressAttributes, AddressCreationAttributes } from './address'
 import { Category as _Category } from './category'
 import type { CategoryAttributes, CategoryCreationAttributes } from './category'
 import { Coupon as _Coupon } from './coupon'
@@ -20,20 +22,38 @@ import type {
   ProductTagAttributes,
   ProductTagCreationAttributes,
 } from './product-tag'
+import { Role as _Role } from './role'
+import type { RoleAttributes, RoleCreationAttributes } from './role'
+import { Shipping as _Shipping } from './shipping'
+import type { ShippingAttributes, ShippingCreationAttributes } from './shipping'
 import { Tag as _Tag } from './tag'
 import type { TagAttributes, TagCreationAttributes } from './tag'
+import { User as _User } from './user'
+import type { UserAttributes, UserCreationAttributes } from './user'
+import { UserRole as _UserRole } from './user-role'
+import type {
+  UserRoleAttributes,
+  UserRoleCreationAttributes,
+} from './user-role'
 
 export {
+  _Address as Address,
   _Category as Category,
   _Coupon as Coupon,
   _Product as Product,
   _ProductCategory as ProductCategory,
   _ProductCoupon as ProductCoupon,
   _ProductTag as ProductTag,
+  _Role as Role,
+  _Shipping as Shipping,
   _Tag as Tag,
+  _User as User,
+  _UserRole as UserRole,
 }
 
 export type {
+  AddressAttributes,
+  AddressCreationAttributes,
   CategoryAttributes,
   CategoryCreationAttributes,
   CouponAttributes,
@@ -46,18 +66,31 @@ export type {
   ProductCouponCreationAttributes,
   ProductTagAttributes,
   ProductTagCreationAttributes,
+  RoleAttributes,
+  RoleCreationAttributes,
+  ShippingAttributes,
+  ShippingCreationAttributes,
   TagAttributes,
   TagCreationAttributes,
+  UserAttributes,
+  UserCreationAttributes,
+  UserRoleAttributes,
+  UserRoleCreationAttributes,
 }
 
 export function initModels(sequelize: Sequelize) {
+  const Address = _Address.initModel(sequelize)
   const Category = _Category.initModel(sequelize)
   const Coupon = _Coupon.initModel(sequelize)
   const Product = _Product.initModel(sequelize)
   const ProductCategory = _ProductCategory.initModel(sequelize)
   const ProductCoupon = _ProductCoupon.initModel(sequelize)
   const ProductTag = _ProductTag.initModel(sequelize)
+  const Role = _Role.initModel(sequelize)
+  const Shipping = _Shipping.initModel(sequelize)
   const Tag = _Tag.initModel(sequelize)
+  const User = _User.initModel(sequelize)
+  const UserRole = _UserRole.initModel(sequelize)
 
   Category.belongsToMany(Product, {
     as: 'products',
@@ -97,12 +130,17 @@ export function initModels(sequelize: Sequelize) {
   })
 
   return {
+    Address: Address,
     Category: Category,
     Coupon: Coupon,
     Product: Product,
     ProductCategory: ProductCategory,
     ProductCoupon: ProductCoupon,
     ProductTag: ProductTag,
+    Role: Role,
+    Shipping: Shipping,
     Tag: Tag,
+    User: User,
+    UserRole: UserRole,
   }
 }

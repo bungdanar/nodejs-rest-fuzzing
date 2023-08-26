@@ -15,6 +15,7 @@ export interface ProductAttributes {
   weight: number
   note: string
   published: number | boolean
+  seller_id: number
   created_at: Date
   updated_at: Date
 
@@ -28,6 +29,7 @@ export type ProductId = Product[ProductPk]
 export type ProductOptionalAttributes =
   | 'id'
   | 'published'
+  | 'seller_id'
   | 'created_at'
   | 'updated_at'
   | 'tags'
@@ -52,6 +54,7 @@ export class Product
   weight!: number
   note!: string
   published!: number | boolean
+  seller_id!: number
   created_at!: Date
   updated_at!: Date
 
@@ -111,6 +114,15 @@ export class Product
           allowNull: false,
           defaultValue: 0,
         },
+        seller_id: {
+          type: DataTypes.INTEGER.UNSIGNED,
+          allowNull: false,
+          defaultValue: 1,
+          references: {
+            model: 'user',
+            key: 'id',
+          },
+        },
         created_at: {
           type: DataTypes.DATE,
           allowNull: false,
@@ -132,6 +144,11 @@ export class Product
             unique: true,
             using: 'BTREE',
             fields: [{ name: 'id' }],
+          },
+          {
+            name: 'seller_id',
+            using: 'BTREE',
+            fields: [{ name: 'seller_id' }],
           },
         ],
       }
