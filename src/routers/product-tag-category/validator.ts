@@ -1,25 +1,25 @@
 import Joi from 'joi'
 import { ProductTagCategoryCreatePayload } from '../../data-type/product'
 import { z } from 'zod'
-import { JoiSchema } from '../../utils/joi-schema'
+import { JoiSchemaUtility } from '../../utils/joi-schema'
 
 export class ProductTagCategoryValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCreatePayload>({
-      tags: JoiSchema.tagCreatePartialJoiValidationSchema(),
-      category: JoiSchema.categoryCreatePartialJoiValidationSchema(),
+      tags: JoiSchemaUtility.tagCreatePartialJoiValidationSchema(),
+      category: JoiSchemaUtility.categoryCreatePartialJoiValidationSchema(),
       // @ts-ignore
-    }).concat(JoiSchema.productCreatePartialJoiValidationSchema())
+    }).concat(JoiSchemaUtility.productCreatePartialJoiValidationSchema())
 
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCreatePayload>({
-      tags: JoiSchema.tagCreateFullJoiValidationSchema(),
-      category: JoiSchema.categoryCreateFullJoiValidationSchema(),
+      tags: JoiSchemaUtility.tagCreateFullJoiValidationSchema(),
+      category: JoiSchemaUtility.categoryCreateFullJoiValidationSchema(),
       // @ts-ignore
-    }).concat(JoiSchema.productCreateFullJoiValidationSchema())
+    }).concat(JoiSchemaUtility.productCreateFullJoiValidationSchema())
 
     return schema.validate(payload)
   }

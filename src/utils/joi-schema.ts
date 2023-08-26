@@ -5,7 +5,7 @@ import {
   ProductCreatePayload,
 } from '../data-type/product'
 
-export class JoiSchema {
+export class JoiSchemaUtility {
   static productCreatePartialJoiValidationSchema = () =>
     Joi.object<ProductCreatePayload>({
       name: Joi.string().required(),

@@ -1,14 +1,14 @@
 import { z } from 'zod'
-import { JoiSchema } from '../../utils/joi-schema'
+import { JoiSchemaUtility } from '../../utils/joi-schema'
 
 export class ProductValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = JoiSchema.productCreatePartialJoiValidationSchema()
+    const schema = JoiSchemaUtility.productCreatePartialJoiValidationSchema()
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = JoiSchema.productCreateFullJoiValidationSchema()
+    const schema = JoiSchemaUtility.productCreateFullJoiValidationSchema()
     return schema.validate(payload)
   }
 
