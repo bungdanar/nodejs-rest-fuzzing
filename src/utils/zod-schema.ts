@@ -1,18 +1,6 @@
 import { z } from 'zod'
 
 export class ZodSchemaUtility {
-  static productCreatePartialZodValidationSchema = z.object({
-    name: z.string(),
-    sku: z.string(),
-    regular_price: z.coerce.number(),
-    discount_price: z.coerce.number(),
-    quantity: z.coerce.number().int(),
-    description: z.string(),
-    weight: z.coerce.number(),
-    note: z.string(),
-    published: z.coerce.boolean().optional(),
-  })
-
   private static tagCreatePartialZodValidationSchema = z
     .array(z.string())
     .nonempty()
@@ -31,33 +19,6 @@ export class ZodSchemaUtility {
     max_usage: z.coerce.number().int(),
     start_date: z.coerce.date(),
     end_date: z.coerce.date(),
-  })
-
-  static productTagCategoryCreatePartialZodValidationSchema =
-    this.productCreatePartialZodValidationSchema.extend({
-      tags: this.tagCreatePartialZodValidationSchema,
-      category: this.categoryCreatePartialZodValidationSchema,
-    })
-
-  static productTagCategoryCouponCreatePartialZodValidationSchema =
-    this.productCreatePartialZodValidationSchema.extend({
-      tags: this.tagCreatePartialZodValidationSchema,
-      categories: z
-        .array(this.categoryCreatePartialZodValidationSchema)
-        .nonempty(),
-      coupons: z.array(this.couponCreatePartialZodValidationSchema).nonempty(),
-    })
-
-  static productCreateFullZodValidationSchema = z.object({
-    name: z.string().min(3).max(255),
-    sku: z.string().min(3).max(255),
-    regular_price: z.coerce.number().nonnegative(),
-    discount_price: z.coerce.number().nonnegative(),
-    quantity: z.coerce.number().int().nonnegative().lte(9999),
-    description: z.string().min(3).max(1000),
-    weight: z.coerce.number().nonnegative().lte(1000),
-    note: z.string().min(3).max(255),
-    published: z.coerce.boolean().optional(),
   })
 
   private static tagCreateFullZodValidationSchema = z
@@ -97,6 +58,45 @@ export class ZodSchemaUtility {
       path: ['end_date'],
       message: 'Must be greater than or equal to start_date',
     })
+
+  static productCreatePartialZodValidationSchema = z.object({
+    name: z.string(),
+    sku: z.string(),
+    regular_price: z.coerce.number(),
+    discount_price: z.coerce.number(),
+    quantity: z.coerce.number().int(),
+    description: z.string(),
+    weight: z.coerce.number(),
+    note: z.string(),
+    published: z.coerce.boolean().optional(),
+  })
+
+  static productTagCategoryCreatePartialZodValidationSchema =
+    this.productCreatePartialZodValidationSchema.extend({
+      tags: this.tagCreatePartialZodValidationSchema,
+      category: this.categoryCreatePartialZodValidationSchema,
+    })
+
+  static productTagCategoryCouponCreatePartialZodValidationSchema =
+    this.productCreatePartialZodValidationSchema.extend({
+      tags: this.tagCreatePartialZodValidationSchema,
+      categories: z
+        .array(this.categoryCreatePartialZodValidationSchema)
+        .nonempty(),
+      coupons: z.array(this.couponCreatePartialZodValidationSchema).nonempty(),
+    })
+
+  static productCreateFullZodValidationSchema = z.object({
+    name: z.string().min(3).max(255),
+    sku: z.string().min(3).max(255),
+    regular_price: z.coerce.number().nonnegative(),
+    discount_price: z.coerce.number().nonnegative(),
+    quantity: z.coerce.number().int().nonnegative().lte(9999),
+    description: z.string().min(3).max(1000),
+    weight: z.coerce.number().nonnegative().lte(1000),
+    note: z.string().min(3).max(255),
+    published: z.coerce.boolean().optional(),
+  })
 
   static productTagCategoryFullZodValidationSchema =
     this.productCreateFullZodValidationSchema
