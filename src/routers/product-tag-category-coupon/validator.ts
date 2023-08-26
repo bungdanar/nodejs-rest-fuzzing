@@ -1,96 +1,35 @@
 import Joi from 'joi'
-import {
-  CategoryCreatePayload,
-  CouponCreatePayload,
-  ProductTagCategoryCouponCreatePayload,
-} from '../../data-type/product'
+import { ProductTagCategoryCouponCreatePayload } from '../../data-type/product'
 import { z } from 'zod'
+import { JoiSchema } from '../../utils/joi-schema'
 
 export class ProductTagCategoryCouponValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCouponCreatePayload>({
-      name: Joi.string().required(),
-      sku: Joi.string().required(),
-      regular_price: Joi.number().required(),
-      discount_price: Joi.number().required(),
-      quantity: Joi.number().integer().required(),
-      description: Joi.string().required(),
-      weight: Joi.number().required(),
-      note: Joi.string().required(),
-      published: Joi.boolean(),
-      tags: Joi.array().items(Joi.string().required()).required(),
+      tags: JoiSchema.tagCreatePartialJoiValidationSchema(),
       categories: Joi.array()
-        .items(
-          Joi.object<CategoryCreatePayload>({
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-          }).required()
-        )
+        .items(JoiSchema.categoryCreatePartialJoiValidationSchema())
         .required(),
       coupons: Joi.array()
-        .items(
-          Joi.object<CouponCreatePayload>({
-            code: Joi.string().required(),
-            description: Joi.string().required(),
-            discount_value: Joi.number().required(),
-            discount_type: Joi.string().required(),
-            times_used: Joi.number().integer(),
-            max_usage: Joi.number().integer().required(),
-            start_date: Joi.date().iso().required(),
-            end_date: Joi.date().iso().required(),
-          }).required()
-        )
+        .items(JoiSchema.couponCreatePartialJoiValidationSchema())
         .required(),
-    })
+      // @ts-ignore
+    }).concat(JoiSchema.productCreatePartialJoiValidationSchema())
 
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCouponCreatePayload>({
-      name: Joi.string().min(3).max(255).required(),
-      sku: Joi.string().min(3).max(255).required(),
-      regular_price: Joi.number().precision(4).min(0).required(),
-      discount_price: Joi.number()
-        .precision(4)
-        .min(0)
-        .max(Joi.ref('regular_price'))
-        .required(),
-      quantity: Joi.number().integer().min(0).max(9999).required(),
-      description: Joi.string().min(3).max(1000).required(),
-      weight: Joi.number().precision(4).min(0).max(1000).required(),
-      note: Joi.string().min(3).max(255).required(),
-      published: Joi.boolean(),
-      tags: Joi.array()
-        .items(Joi.string().min(3).max(255).required())
-        .required(),
+      tags: JoiSchema.tagCreateFullJoiValidationSchema(),
       categories: Joi.array()
-        .items(
-          Joi.object<CategoryCreatePayload>({
-            name: Joi.string().min(3).max(255).required(),
-            description: Joi.string().min(3).max(1000).required(),
-          }).required()
-        )
+        .items(JoiSchema.categoryCreateFullJoiValidationSchema())
         .required(),
       coupons: Joi.array()
-        .items(
-          Joi.object<CouponCreatePayload>({
-            code: Joi.string().min(3).max(255).required(),
-            description: Joi.string().min(3).max(1000).required(),
-            discount_value: Joi.number()
-              .precision(2)
-              .min(0)
-              .max(100)
-              .required(),
-            discount_type: Joi.string().min(3).max(255).required(),
-            times_used: Joi.number().integer().min(0).max(Joi.ref('max_usage')),
-            max_usage: Joi.number().integer().min(0).required(),
-            start_date: Joi.date().iso().required(),
-            end_date: Joi.date().iso().min(Joi.ref('start_date')).required(),
-          }).required()
-        )
+        .items(JoiSchema.couponCreateFullJoiValidationSchema())
         .required(),
-    })
+      // @ts-ignore
+    }).concat(JoiSchema.productCreateFullJoiValidationSchema())
 
     return schema.validate(payload)
   }

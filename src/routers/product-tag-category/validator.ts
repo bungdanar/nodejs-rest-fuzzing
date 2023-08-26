@@ -1,55 +1,25 @@
 import Joi from 'joi'
-import {
-  CategoryCreatePayload,
-  ProductTagCategoryCreatePayload,
-} from '../../data-type/product'
+import { ProductTagCategoryCreatePayload } from '../../data-type/product'
 import { z } from 'zod'
+import { JoiSchema } from '../../utils/joi-schema'
 
 export class ProductTagCategoryValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCreatePayload>({
-      name: Joi.string().required(),
-      sku: Joi.string().required(),
-      regular_price: Joi.number().required(),
-      discount_price: Joi.number().required(),
-      quantity: Joi.number().integer().required(),
-      description: Joi.string().required(),
-      weight: Joi.number().required(),
-      note: Joi.string().required(),
-      published: Joi.boolean(),
-      tags: Joi.array().items(Joi.string().required()).required(),
-      category: Joi.object<CategoryCreatePayload>({
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-      }).required(),
-    })
+      tags: JoiSchema.tagCreatePartialJoiValidationSchema(),
+      category: JoiSchema.categoryCreatePartialJoiValidationSchema(),
+      // @ts-ignore
+    }).concat(JoiSchema.productCreatePartialJoiValidationSchema())
 
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     const schema = Joi.object<ProductTagCategoryCreatePayload>({
-      name: Joi.string().min(3).max(255).required(),
-      sku: Joi.string().min(3).max(255).required(),
-      regular_price: Joi.number().precision(4).min(0).required(),
-      discount_price: Joi.number()
-        .precision(4)
-        .min(0)
-        .max(Joi.ref('regular_price'))
-        .required(),
-      quantity: Joi.number().integer().min(0).max(9999).required(),
-      description: Joi.string().min(3).max(1000).required(),
-      weight: Joi.number().precision(4).min(0).max(1000).required(),
-      note: Joi.string().min(3).max(255).required(),
-      published: Joi.boolean(),
-      tags: Joi.array()
-        .items(Joi.string().min(3).max(255).required())
-        .required(),
-      category: Joi.object<CategoryCreatePayload>({
-        name: Joi.string().min(3).max(255).required(),
-        description: Joi.string().min(3).max(1000).required(),
-      }).required(),
-    })
+      tags: JoiSchema.tagCreateFullJoiValidationSchema(),
+      category: JoiSchema.categoryCreateFullJoiValidationSchema(),
+      // @ts-ignore
+    }).concat(JoiSchema.productCreateFullJoiValidationSchema())
 
     return schema.validate(payload)
   }
