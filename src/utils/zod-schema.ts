@@ -13,6 +13,21 @@ export class ZodSchemaUtility {
     published: z.coerce.boolean().optional(),
   })
 
+  private static tagCreatePartialZodValidationSchema = z
+    .array(z.string())
+    .nonempty()
+
+  private static categoryCreatePartialZodValidationSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+  })
+
+  static productTagCategoryCreatePartialZodValidationSchema =
+    this.productCreatePartialZodValidationSchema.extend({
+      tags: this.tagCreatePartialZodValidationSchema,
+      category: this.categoryCreatePartialZodValidationSchema,
+    })
+
   static productCreateFullZodValidationSchema = z.object({
     name: z.string().min(3).max(255),
     sku: z.string().min(3).max(255),
@@ -24,6 +39,26 @@ export class ZodSchemaUtility {
     note: z.string().min(3).max(255),
     published: z.coerce.boolean().optional(),
   })
+
+  private static tagCreateFullZodValidationSchema = z
+    .array(z.string().min(3).max(255))
+    .nonempty()
+
+  private static categoryCreateFullZodValidationSchema = z.object({
+    name: z.string().min(3).max(255),
+    description: z.string().min(3).max(1000),
+  })
+
+  static productTagCategoryFullZodValidationSchema =
+    this.productCreateFullZodValidationSchema
+      .extend({
+        tags: this.tagCreateFullZodValidationSchema,
+        category: this.categoryCreateFullZodValidationSchema,
+      })
+      .refine((data) => data.discount_price <= data.regular_price, {
+        path: ['discount_price'],
+        message: 'Must be less than or equal to regular_price',
+      })
 
   static refineProductCreateSchema = (
     schema: typeof this.productCreateFullZodValidationSchema

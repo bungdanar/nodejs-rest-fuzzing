@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import { ProductTagCategoryCreatePayload } from '../../data-type/product'
-import { z } from 'zod'
 import { JoiSchemaUtility } from '../../utils/joi-schema'
+import { ZodSchemaUtility } from '../../utils/zod-schema'
 
 export class ProductTagCategoryValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
@@ -25,48 +25,14 @@ export class ProductTagCategoryValidator {
   }
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = z.object({
-      name: z.string(),
-      sku: z.string(),
-      regular_price: z.coerce.number(),
-      discount_price: z.coerce.number(),
-      quantity: z.coerce.number().int(),
-      description: z.string(),
-      weight: z.coerce.number(),
-      note: z.string(),
-      published: z.coerce.boolean().optional(),
-      tags: z.array(z.string()).nonempty(),
-      category: z.object({
-        name: z.string(),
-        description: z.string(),
-      }),
-    })
+    const schema =
+      ZodSchemaUtility.productTagCategoryCreatePartialZodValidationSchema
 
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = z
-      .object({
-        name: z.string().min(3).max(255),
-        sku: z.string().min(3).max(255),
-        regular_price: z.coerce.number().nonnegative(),
-        discount_price: z.coerce.number().nonnegative(),
-        quantity: z.coerce.number().int().nonnegative().lte(9999),
-        description: z.string().min(3).max(1000),
-        weight: z.coerce.number().nonnegative().lte(1000),
-        note: z.string().min(3).max(255),
-        published: z.coerce.boolean().optional(),
-        tags: z.array(z.string().min(3).max(255)).nonempty(),
-        category: z.object({
-          name: z.string().min(3).max(255),
-          description: z.string().min(3).max(1000),
-        }),
-      })
-      .refine((data) => data.discount_price <= data.regular_price, {
-        path: ['discount_price'],
-        message: 'Must be less than or equal to regular_price',
-      })
+    const schema = ZodSchemaUtility.productTagCategoryFullZodValidationSchema
 
     return schema.safeParse(payload)
   }
