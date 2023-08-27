@@ -1,35 +1,17 @@
-import Joi from 'joi'
-import { ProductTagCategoryCouponCreatePayload } from '../../data-type/product'
 import { JoiSchemaUtility } from '../../utils/joi-schema'
 import { ZodSchemaUtility } from '../../utils/zod-schema'
 
 export class ProductTagCategoryCouponValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = Joi.object<ProductTagCategoryCouponCreatePayload>({
-      tags: JoiSchemaUtility.tagCreatePartialJoiValidationSchema(),
-      categories: Joi.array()
-        .items(JoiSchemaUtility.categoryCreatePartialJoiValidationSchema())
-        .required(),
-      coupons: Joi.array()
-        .items(JoiSchemaUtility.couponCreatePartialJoiValidationSchema())
-        .required(),
-      // @ts-ignore
-    }).concat(JoiSchemaUtility.productCreatePartialJoiValidationSchema())
+    const schema =
+      JoiSchemaUtility.productTagCategoryCouponCreatePartialJoiValidationSchema
 
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = Joi.object<ProductTagCategoryCouponCreatePayload>({
-      tags: JoiSchemaUtility.tagCreateFullJoiValidationSchema(),
-      categories: Joi.array()
-        .items(JoiSchemaUtility.categoryCreateFullJoiValidationSchema())
-        .required(),
-      coupons: Joi.array()
-        .items(JoiSchemaUtility.couponCreateFullJoiValidationSchema())
-        .required(),
-      // @ts-ignore
-    }).concat(JoiSchemaUtility.productCreateFullJoiValidationSchema())
+    const schema =
+      JoiSchemaUtility.productTagCategoryCouponCreateFullJoiValidationSchema
 
     return schema.validate(payload)
   }

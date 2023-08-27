@@ -3,12 +3,12 @@ import { ZodSchemaUtility } from '../../utils/zod-schema'
 
 export class ProductValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = JoiSchemaUtility.productCreatePartialJoiValidationSchema()
+    const schema = JoiSchemaUtility.productCreatePartialJoiValidationSchema
     return schema.validate(payload)
   }
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
-    const schema = JoiSchemaUtility.productCreateFullJoiValidationSchema()
+    const schema = JoiSchemaUtility.productCreateFullJoiValidationSchema
     return schema.validate(payload)
   }
 
