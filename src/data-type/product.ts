@@ -19,6 +19,7 @@ export type ProductCreatePayload = Omit<
   ProductAttributes,
   | 'id'
   | 'published'
+  | 'seller_id'
   | 'created_at'
   | 'updated_at'
   | 'tags'
@@ -26,6 +27,7 @@ export type ProductCreatePayload = Omit<
   | 'coupons'
 > & {
   published?: number | boolean | undefined
+  seller_id?: number | undefined
 }
 
 export type ProductTagCategoryCreatePayload = ProductCreatePayload & {
