@@ -738,257 +738,38 @@
       },
       "ProductTagCategoryResponse": {
         "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductResponse"
+          }
+        ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "sku": {
-            "type": "string"
-          },
-          "regular_price": {
-            "type": "number",
-            "format": "float"
-          },
-          "discount_price": {
-            "type": "number",
-            "format": "float"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string"
-          },
-          "weight": {
-            "type": "number",
-            "format": "float"
-          },
-          "note": {
-            "type": "string"
-          },
-          "published": {
-            "type": "boolean"
-          },
-          "seller_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
           "tags": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
+              "$ref": "#/components/schemas/TagResponse"
             }
           },
           "categories": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "active": {
-                  "type": "boolean"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
+              "$ref": "#/components/schemas/CategoryResponse"
             }
           }
         }
       },
       "ProductTagCategoryCouponResponse": {
         "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductTagCategoryResponse"
+          }
+        ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "sku": {
-            "type": "string"
-          },
-          "regular_price": {
-            "type": "number",
-            "format": "float"
-          },
-          "discount_price": {
-            "type": "number",
-            "format": "float"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string"
-          },
-          "weight": {
-            "type": "number",
-            "format": "float"
-          },
-          "note": {
-            "type": "string"
-          },
-          "published": {
-            "type": "boolean"
-          },
-          "seller_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
-          },
-          "categories": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "active": {
-                  "type": "boolean"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
-          },
           "coupons": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "code": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "discount_value": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "discount_type": {
-                  "type": "string"
-                },
-                "times_used": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "max_usage": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "start_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "end_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
+              "$ref": "#/components/schemas/CouponResponse"
             }
           }
         }
