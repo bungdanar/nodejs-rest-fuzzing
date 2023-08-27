@@ -18,10 +18,7 @@ export class ProductValidator {
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.refineProductCreateSchema(
-      ZodSchemaUtility.productCreateFullZodValidationSchema
-    )
-
+    const schema = ZodSchemaUtility.productCreateFullZodValidationRefinedSchema
     return schema.safeParse(payload)
   }
 }

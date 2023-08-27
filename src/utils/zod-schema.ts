@@ -86,7 +86,16 @@ export class ZodSchemaUtility {
       coupons: z.array(this.couponCreatePartialZodValidationSchema).nonempty(),
     })
 
-  static productCreateFullZodValidationSchema = z.object({
+  /**
+   * Use this for combination with this schema as base schema.
+   * And you need to refine the extended schema with this refine chain function example.
+   * This is just how zod works with schema extension. Hope this will be fixed in the future.
+   * @example.refine((data) => data.discount_price <= data.regular_price, {
+        path: ['discount_price'],
+        message: 'Must be less than or equal to regular_price',
+      })
+   */
+  static productCreateFullZodValidationCoreSchema = z.object({
     name: z.string().min(3).max(255),
     sku: z.string().min(3).max(255),
     regular_price: z.coerce.number().nonnegative(),
@@ -98,8 +107,28 @@ export class ZodSchemaUtility {
     published: z.coerce.boolean().optional(),
   })
 
+  /**
+   * Use this for standalone use. Not for combination with this schema as base schema
+   */
+  static productCreateFullZodValidationRefinedSchema = z
+    .object({
+      name: z.string().min(3).max(255),
+      sku: z.string().min(3).max(255),
+      regular_price: z.coerce.number().nonnegative(),
+      discount_price: z.coerce.number().nonnegative(),
+      quantity: z.coerce.number().int().nonnegative().lte(9999),
+      description: z.string().min(3).max(1000),
+      weight: z.coerce.number().nonnegative().lte(1000),
+      note: z.string().min(3).max(255),
+      published: z.coerce.boolean().optional(),
+    })
+    .refine((data) => data.discount_price <= data.regular_price, {
+      path: ['discount_price'],
+      message: 'Must be less than or equal to regular_price',
+    })
+
   static productTagCategoryFullZodValidationSchema =
-    this.productCreateFullZodValidationSchema
+    this.productCreateFullZodValidationCoreSchema
       .extend({
         tags: this.tagCreateFullZodValidationSchema,
         category: this.categoryCreateFullZodValidationSchema,
@@ -110,7 +139,7 @@ export class ZodSchemaUtility {
       })
 
   static productTagCategoryCouponCreateFullZodValidationSchema =
-    this.productCreateFullZodValidationSchema
+    this.productCreateFullZodValidationCoreSchema
       .extend({
         tags: this.tagCreateFullZodValidationSchema,
         categories: z
@@ -122,12 +151,4 @@ export class ZodSchemaUtility {
         path: ['discount_price'],
         message: 'Must be less than or equal to regular_price',
       })
-
-  static refineProductCreateSchema = (
-    schema: typeof this.productCreateFullZodValidationSchema
-  ) =>
-    schema.refine((data) => data.discount_price <= data.regular_price, {
-      path: ['discount_price'],
-      message: 'Must be less than or equal to regular_price',
-    })
 }
