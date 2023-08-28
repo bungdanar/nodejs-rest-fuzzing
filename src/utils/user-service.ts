@@ -105,23 +105,24 @@ export class UserService {
         ...userPayload,
         // @ts-ignore
         addresses: addressPayloads,
-      },
-      {
-        transaction,
-        include: [{ association: User.associations.addresses }],
-      }
-    )
-
-    const createdProduct = await Product.create(
-      {
-        ...productPayload,
-        seller_id: createdUser.id,
         // @ts-ignore
-        shippings: [shippingPayload],
+        products: [
+          {
+            ...productPayload,
+            // @ts-ignore
+            shippings: [shippingPayload],
+          },
+        ],
       },
       {
         transaction,
-        include: [{ association: Product.associations.shippings }],
+        include: [
+          { association: User.associations.addresses },
+          {
+            association: User.associations.products,
+            include: [{ association: Product.associations.shippings }],
+          },
+        ],
       }
     )
 
@@ -132,8 +133,6 @@ export class UserService {
       },
       { transaction }
     )
-
-    createdUser.products = [createdProduct]
 
     return createdUser
   }
