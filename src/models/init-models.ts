@@ -128,6 +128,11 @@ export function initModels(sequelize: Sequelize) {
     foreignKey: 'tag_id',
     otherKey: 'product_id',
   })
+  Product.hasMany(Shipping, {
+    as: 'shippings',
+    sourceKey: 'id',
+    foreignKey: 'product_id',
+  })
   User.belongsToMany(Role, {
     as: 'roles',
     through: UserRole,

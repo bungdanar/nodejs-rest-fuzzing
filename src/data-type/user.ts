@@ -1,5 +1,5 @@
 import { AddressAttributes, UserAttributes } from '../models/init-models'
-import { ProductCreatePayload } from './product'
+import { ProductCreatePayload, ShippingCreatePayload } from './product'
 
 export type UserCreatePayload = Omit<
   UserAttributes,
@@ -19,3 +19,8 @@ export type UserAddressProductCreatePayload = UserCreatePayload & {
   addresses: AddressCreatePayload[]
   product: ProductCreatePayload
 }
+
+export type UserAddressProductShippingCreatePayload =
+  UserAddressProductCreatePayload & {
+    shipping: ShippingCreatePayload
+  }

@@ -3,6 +3,7 @@ import { Association, DataTypes, Model, Optional } from 'sequelize'
 import { Tag, TagAttributes } from './tag'
 import { Category, CategoryAttributes } from './category'
 import { Coupon, CouponAttributes } from './coupon'
+import { Shipping, ShippingAttributes } from './shipping'
 
 export interface ProductAttributes {
   id: number
@@ -22,6 +23,7 @@ export interface ProductAttributes {
   tags?: TagAttributes[]
   categories?: CategoryAttributes[]
   coupons?: CouponAttributes[]
+  shippings?: ShippingAttributes[]
 }
 
 export type ProductPk = 'id'
@@ -35,6 +37,7 @@ export type ProductOptionalAttributes =
   | 'tags'
   | 'categories'
   | 'coupons'
+  | 'shippings'
 export type ProductCreationAttributes = Optional<
   ProductAttributes,
   ProductOptionalAttributes
@@ -61,11 +64,13 @@ export class Product
   tags?: Tag[]
   categories?: Category[]
   coupons?: Coupon[]
+  shippings?: Shipping[]
 
   static associations: {
     tags: Association<Product, Tag>
     categories: Association<Product, Category>
     coupons: Association<Product, Coupon>
+    shippings: Association<Product, Shipping>
   }
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Product {

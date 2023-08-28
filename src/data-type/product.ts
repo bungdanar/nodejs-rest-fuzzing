@@ -2,6 +2,7 @@ import {
   CategoryAttributes,
   CouponAttributes,
   ProductAttributes,
+  ShippingAttributes,
 } from '../models/init-models'
 
 export type CategoryCreatePayload = Pick<
@@ -15,6 +16,13 @@ export type CouponCreatePayload = Omit<
 > &
   Partial<Pick<CouponAttributes, 'times_used'>>
 
+export type ShippingCreatePayload = Omit<
+  ShippingAttributes,
+  'id' | 'free' | 'product_id' | 'created_at' | 'updated_at'
+> & {
+  free?: number | boolean | undefined
+}
+
 export type ProductCreatePayload = Omit<
   ProductAttributes,
   | 'id'
@@ -25,6 +33,7 @@ export type ProductCreatePayload = Omit<
   | 'tags'
   | 'categories'
   | 'coupons'
+  | 'shippings'
 > & {
   published?: number | boolean | undefined
   seller_id?: number | undefined
