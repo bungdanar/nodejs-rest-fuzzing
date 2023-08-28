@@ -1,5 +1,9 @@
 import { Transaction } from 'sequelize'
-import { UserAddressCreatePayload, UserCreatePayload } from '../data-type/user'
+import {
+  UserAddressCreatePayload,
+  UserAddressProductCreatePayload,
+  UserCreatePayload,
+} from '../data-type/user'
 import { User, UserRole } from '../models/init-models'
 
 export class UserService {
@@ -33,6 +37,44 @@ export class UserService {
         addresses: [addressPayload],
       },
       { transaction, include: [{ association: User.associations.addresses }] }
+    )
+
+    await UserRole.create(
+      {
+        user_id: user.id,
+        role_id: 2,
+      },
+      { transaction }
+    )
+
+    return user
+  }
+
+  static createWithAddressProduct = async (
+    payload: UserAddressProductCreatePayload,
+    transaction: Transaction | null | undefined
+  ): Promise<User> => {
+    const {
+      addresses: addressPayloads,
+      product: productPayload,
+      ...userPayload
+    } = payload
+
+    const user = await User.create(
+      {
+        ...userPayload,
+        // @ts-ignore
+        addresses: addressPayloads,
+        // @ts-ignore
+        products: [productPayload],
+      },
+      {
+        transaction,
+        include: [
+          { association: User.associations.addresses },
+          { association: User.associations.products },
+        ],
+      }
     )
 
     await UserRole.create(

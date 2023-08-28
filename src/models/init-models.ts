@@ -145,6 +145,11 @@ export function initModels(sequelize: Sequelize) {
     sourceKey: 'id',
     foreignKey: 'user_id',
   })
+  User.hasMany(Product, {
+    as: 'products',
+    sourceKey: 'id',
+    foreignKey: 'seller_id',
+  })
 
   return {
     Address: Address,
