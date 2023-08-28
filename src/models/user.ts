@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize'
-import { DataTypes, Model, Optional } from 'sequelize'
+import { Association, DataTypes, Model, Optional } from 'sequelize'
+import { Role, RoleAttributes } from './role'
 
 export interface UserAttributes {
   id: number
@@ -10,11 +11,17 @@ export interface UserAttributes {
   phone_number: string
   created_at: Date
   updated_at: Date
+
+  roles?: RoleAttributes[]
 }
 
 export type UserPk = 'id'
 export type UserId = User[UserPk]
-export type UserOptionalAttributes = 'id' | 'created_at' | 'updated_at'
+export type UserOptionalAttributes =
+  | 'id'
+  | 'created_at'
+  | 'updated_at'
+  | 'roles'
 export type UserCreationAttributes = Optional<
   UserAttributes,
   UserOptionalAttributes
@@ -32,6 +39,12 @@ export class User
   phone_number!: string
   created_at!: Date
   updated_at!: Date
+
+  roles?: Role[]
+
+  static associations: {
+    roles: Association<User, Role>
+  }
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {
     return User.init(

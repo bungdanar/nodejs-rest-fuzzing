@@ -128,6 +128,18 @@ export function initModels(sequelize: Sequelize) {
     foreignKey: 'tag_id',
     otherKey: 'product_id',
   })
+  User.belongsToMany(Role, {
+    as: 'roles',
+    through: UserRole,
+    foreignKey: 'user_id',
+    otherKey: 'role_id',
+  })
+  Role.belongsToMany(User, {
+    as: 'users',
+    through: UserRole,
+    foreignKey: 'role_id',
+    otherKey: 'user_id',
+  })
 
   return {
     Address: Address,

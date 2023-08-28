@@ -8,6 +8,7 @@ import { productRouter } from './routers/product/router'
 import { productTagCategoryRouter } from './routers/product-tag-category/router'
 import { productTagCategoryCouponRouter } from './routers/product-tag-category-coupon/router'
 import { resTime } from './middlewares/res-time'
+import { userRouter } from './routers/user/router'
 
 const app = express()
 app.use(responseTime())
@@ -22,6 +23,7 @@ app.use(resTime)
 app.use('/api/product', productRouter)
 app.use('/api/product-tag-category', productTagCategoryRouter)
 app.use('/api/product-tag-category-coupon', productTagCategoryCouponRouter)
+app.use('/api/user', userRouter)
 
 app.use(errHandler)
 
