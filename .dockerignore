@@ -8,5 +8,6 @@ docker-compose*
 README.md
 LICENSE
 .vscode
+.env
 .env.example
 logs

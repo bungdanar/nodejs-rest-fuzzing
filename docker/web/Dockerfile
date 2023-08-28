@@ -1,16 +1,11 @@
 FROM node:18.17.1
 
-RUN apt-get update ;\
-    apt-get install -y tzdata
-
 # Set app directory
 WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --omit=dev
 
-# Bundle app source
-COPY . .
-
-CMD ["npm", "run", "start:prod"]
+# Copy build source
+COPY ./build/ .
