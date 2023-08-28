@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize'
 import { Association, DataTypes, Model, Optional } from 'sequelize'
 import { Role, RoleAttributes } from './role'
+import { Address, AddressAttributes } from './address'
 
 export interface UserAttributes {
   id: number
@@ -13,6 +14,7 @@ export interface UserAttributes {
   updated_at: Date
 
   roles?: RoleAttributes[]
+  addresses?: AddressAttributes[]
 }
 
 export type UserPk = 'id'
@@ -22,6 +24,7 @@ export type UserOptionalAttributes =
   | 'created_at'
   | 'updated_at'
   | 'roles'
+  | 'addresses'
 export type UserCreationAttributes = Optional<
   UserAttributes,
   UserOptionalAttributes
@@ -41,9 +44,11 @@ export class User
   updated_at!: Date
 
   roles?: Role[]
+  addresses?: Address[]
 
   static associations: {
     roles: Association<User, Role>
+    addresses: Association<User, Address>
   }
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {

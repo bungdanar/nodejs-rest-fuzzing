@@ -140,6 +140,11 @@ export function initModels(sequelize: Sequelize) {
     foreignKey: 'role_id',
     otherKey: 'user_id',
   })
+  User.hasMany(Address, {
+    as: 'addresses',
+    sourceKey: 'id',
+    foreignKey: 'user_id',
+  })
 
   return {
     Address: Address,
