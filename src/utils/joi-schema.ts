@@ -6,6 +6,7 @@ import {
   ProductTagCategoryCouponCreatePayload,
   ProductTagCategoryCreatePayload,
 } from '../data-type/product'
+import { UserCreatePayload } from '../data-type/user'
 
 export class JoiSchemaUtility {
   private static plainProductCreatePartialJoiValidation: Partial<
@@ -44,6 +45,16 @@ export class JoiSchemaUtility {
     max_usage: Joi.number().integer().required(),
     start_date: Joi.date().iso().required(),
     end_date: Joi.date().iso().required(),
+  }
+
+  private static plainUserCreatePartialJoiValidation: Partial<
+    Record<keyof UserCreatePayload, Joi.Schema>
+  > = {
+    first_name: Joi.string().required(),
+    last_name: Joi.string().required(),
+    email: Joi.string().required(),
+    phone_code: Joi.string().required(),
+    phone_number: Joi.string().required(),
   }
 
   private static plainProductCreateFullJoiValidation: Partial<
@@ -86,6 +97,20 @@ export class JoiSchemaUtility {
     max_usage: Joi.number().integer().min(0).required(),
     start_date: Joi.date().iso().required(),
     end_date: Joi.date().iso().min(Joi.ref('start_date')).required(),
+  }
+
+  private static plainUserCreateFullJoiValidation: Partial<
+    Record<keyof UserCreatePayload, Joi.Schema>
+  > = {
+    first_name: Joi.string().min(3).max(255).required(),
+    last_name: Joi.string().min(3).max(255).required(),
+    email: Joi.string().email().max(255).required(),
+    phone_code: Joi.string()
+      .pattern(/^[0-9]{1,3}$/)
+      .required(),
+    phone_number: Joi.string()
+      .pattern(/^[0-9]{4,12}$/)
+      .required(),
   }
 
   static productCreatePartialJoiValidationSchema =
@@ -155,4 +180,12 @@ export class JoiSchemaUtility {
         )
         .required(),
     })
+
+  static userCreatePartialJoiValidationSchema = Joi.object<UserCreatePayload>({
+    ...this.plainUserCreatePartialJoiValidation,
+  }).required()
+
+  static userCreateFullJoiValidationSchema = Joi.object<UserCreatePayload>({
+    ...this.plainUserCreateFullJoiValidation,
+  }).required()
 }
