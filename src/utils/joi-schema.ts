@@ -6,7 +6,11 @@ import {
   ProductTagCategoryCouponCreatePayload,
   ProductTagCategoryCreatePayload,
 } from '../data-type/product'
-import { UserCreatePayload } from '../data-type/user'
+import {
+  AddressCreatePayload,
+  UserAddressCreatePayload,
+  UserCreatePayload,
+} from '../data-type/user'
 
 export class JoiSchemaUtility {
   private static plainProductCreatePartialJoiValidation: Partial<
@@ -55,6 +59,15 @@ export class JoiSchemaUtility {
     email: Joi.string().required(),
     phone_code: Joi.string().required(),
     phone_number: Joi.string().required(),
+  }
+
+  private static plainAddressCreatePartialJoiValidation: Partial<
+    Record<keyof AddressCreatePayload, Joi.Schema>
+  > = {
+    street: Joi.string().required(),
+    city: Joi.string().required(),
+    country: Joi.string().required(),
+    postal_code: Joi.string().required(),
   }
 
   private static plainProductCreateFullJoiValidation: Partial<
@@ -110,6 +123,17 @@ export class JoiSchemaUtility {
       .required(),
     phone_number: Joi.string()
       .pattern(/^[0-9]{4,12}$/)
+      .required(),
+  }
+
+  private static plainAddressCreateFullJoiValidation: Partial<
+    Record<keyof AddressCreatePayload, Joi.Schema>
+  > = {
+    street: Joi.string().min(3).max(255).required(),
+    city: Joi.string().min(3).max(255).required(),
+    country: Joi.string().min(3).max(255).required(),
+    postal_code: Joi.string()
+      .pattern(/^[0-9]{5}$/)
       .required(),
   }
 
@@ -185,7 +209,23 @@ export class JoiSchemaUtility {
     ...this.plainUserCreatePartialJoiValidation,
   }).required()
 
+  static userAddrCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      address: Joi.object<AddressCreatePayload>({
+        ...this.plainAddressCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
   static userCreateFullJoiValidationSchema = Joi.object<UserCreatePayload>({
     ...this.plainUserCreateFullJoiValidation,
   }).required()
+
+  static userAddrCreateFullJoiValidationSchema =
+    Joi.object<UserAddressCreatePayload>({
+      ...this.plainUserCreateFullJoiValidation,
+      address: Joi.object<AddressCreatePayload>({
+        ...this.plainAddressCreateFullJoiValidation,
+      }).required(),
+    }).required()
 }

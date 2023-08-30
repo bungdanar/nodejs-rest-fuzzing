@@ -26,7 +26,6 @@ switch (Environment.APP_ENV.VALIDATION) {
 
   default: {
     router.post('/', UserController.create)
-
     break
   }
 }
