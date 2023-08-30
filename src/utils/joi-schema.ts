@@ -9,6 +9,7 @@ import {
 import {
   AddressCreatePayload,
   UserAddressCreatePayload,
+  UserAddressProductCreatePayload,
   UserCreatePayload,
 } from '../data-type/user'
 
@@ -171,6 +172,33 @@ export class JoiSchemaUtility {
         .required(),
     })
 
+  static userCreatePartialJoiValidationSchema = Joi.object<UserCreatePayload>({
+    ...this.plainUserCreatePartialJoiValidation,
+  }).required()
+
+  static userAddrCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      address: Joi.object<AddressCreatePayload>({
+        ...this.plainAddressCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressProductCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreatePartialJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
   static productCreateFullJoiValidationSchema =
     Joi.object<ProductCreatePayload>({
       ...this.plainProductCreateFullJoiValidation,
@@ -205,18 +233,6 @@ export class JoiSchemaUtility {
         .required(),
     })
 
-  static userCreatePartialJoiValidationSchema = Joi.object<UserCreatePayload>({
-    ...this.plainUserCreatePartialJoiValidation,
-  }).required()
-
-  static userAddrCreatePartialJoiValidationSchema =
-    Joi.object<UserAddressCreatePayload>({
-      ...this.plainUserCreatePartialJoiValidation,
-      address: Joi.object<AddressCreatePayload>({
-        ...this.plainAddressCreatePartialJoiValidation,
-      }).required(),
-    }).required()
-
   static userCreateFullJoiValidationSchema = Joi.object<UserCreatePayload>({
     ...this.plainUserCreateFullJoiValidation,
   }).required()
@@ -226,6 +242,21 @@ export class JoiSchemaUtility {
       ...this.plainUserCreateFullJoiValidation,
       address: Joi.object<AddressCreatePayload>({
         ...this.plainAddressCreateFullJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdCreateFullJoiValidationSchema =
+    Joi.object<UserAddressProductCreatePayload>({
+      ...this.plainUserCreateFullJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreateFullJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreateFullJoiValidation,
       }).required(),
     }).required()
 }
