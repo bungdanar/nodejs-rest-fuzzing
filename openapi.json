@@ -498,61 +498,6 @@
           }
         }
       },
-      "UserAddressCreatePayload": {
-        "type": "object",
-        "required": [
-          "address"
-        ],
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/UserCreatePayload"
-          }
-        ],
-        "properties": {
-          "address": {
-            "$ref": "#/components/schemas/AddressCreatePayload"
-          }
-        }
-      },
-      "UserAddressProductCreatePayload": {
-        "type": "object",
-        "required": [
-          "addresses",
-          "product"
-        ],
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/UserCreatePayload"
-          }
-        ],
-        "properties": {
-          "addresses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AddressCreatePayload"
-            }
-          },
-          "product": {
-            "$ref": "#/components/schemas/ProductCreatePayload"
-          }
-        }
-      },
-      "UserAddressProductShippingCreatePayload": {
-        "type": "object",
-        "required": [
-          "shipping"
-        ],
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/UserAddressProductCreatePayload"
-          }
-        ],
-        "properties": {
-          "shipping": {
-            "$ref": "#/components/schemas/ShippingCreatePayload"
-          }
-        }
-      },
       "TagResponse": {
         "type": "object",
         "properties": {
