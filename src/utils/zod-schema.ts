@@ -151,4 +151,20 @@ export class ZodSchemaUtility {
         path: ['discount_price'],
         message: 'Must be less than or equal to regular_price',
       })
+
+  static userCreatePartialZodValidationSchema = z.object({
+    first_name: z.string(),
+    last_name: z.string(),
+    email: z.string(),
+    phone_code: z.string(),
+    phone_number: z.string(),
+  })
+
+  static userCreateFullZodValidationSchema = z.object({
+    first_name: z.string().min(3).max(255),
+    last_name: z.string().min(3).max(255),
+    email: z.string().email().max(255),
+    phone_code: z.string().regex(/^[0-9]{1,3}$/),
+    phone_number: z.string().regex(/^[0-9]{4,12}$/),
+  })
 }

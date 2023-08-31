@@ -1,4 +1,5 @@
 import { JoiSchemaUtility } from '../../utils/joi-schema'
+import { ZodSchemaUtility } from '../../utils/zod-schema'
 
 export class UserValidator {
   static partialValidateCreatePayloadWithJoi = (payload: any) => {
@@ -9,5 +10,15 @@ export class UserValidator {
 
   static fullValidateCreatePayloadWithJoi = (payload: any) => {
     return JoiSchemaUtility.userCreateFullJoiValidationSchema.validate(payload)
+  }
+
+  static partialValidateCreatePayloadWithZod = (payload: any) => {
+    const schema = ZodSchemaUtility.userCreatePartialZodValidationSchema
+    return schema.safeParse(payload)
+  }
+
+  static fullValidateCreatePayloadWithZod = (payload: any) => {
+    const schema = ZodSchemaUtility.userCreateFullZodValidationSchema
+    return schema.safeParse(payload)
   }
 }
