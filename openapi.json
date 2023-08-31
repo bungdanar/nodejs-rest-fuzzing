@@ -839,6 +839,70 @@
           }
         }
       },
+      "ProductShippingResponse": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductResponse"
+          }
+        ],
+        "properties": {
+          "shippings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShippingResponse"
+            }
+          }
+        }
+      },
+      "UserAddressResponse": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserResponse"
+          }
+        ],
+        "properties": {
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddressResponse"
+            }
+          }
+        }
+      },
+      "UserAddressProductResponse": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#components/schemas/UserAddressResponse"
+          }
+        ],
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "UserAddressProductShippingResponse": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#components/schemas/UserAddressResponse"
+          }
+        ],
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductShippingResponse"
+            }
+          }
+        }
+      },
       "ErrResponse": {
         "type": "object",
         "properties": {
