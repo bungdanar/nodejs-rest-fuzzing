@@ -128,6 +128,33 @@ export function initModels(sequelize: Sequelize) {
     foreignKey: 'tag_id',
     otherKey: 'product_id',
   })
+  Product.hasMany(Shipping, {
+    as: 'shippings',
+    sourceKey: 'id',
+    foreignKey: 'product_id',
+  })
+  User.belongsToMany(Role, {
+    as: 'roles',
+    through: UserRole,
+    foreignKey: 'user_id',
+    otherKey: 'role_id',
+  })
+  Role.belongsToMany(User, {
+    as: 'users',
+    through: UserRole,
+    foreignKey: 'role_id',
+    otherKey: 'user_id',
+  })
+  User.hasMany(Address, {
+    as: 'addresses',
+    sourceKey: 'id',
+    foreignKey: 'user_id',
+  })
+  User.hasMany(Product, {
+    as: 'products',
+    sourceKey: 'id',
+    foreignKey: 'seller_id',
+  })
 
   return {
     Address: Address,

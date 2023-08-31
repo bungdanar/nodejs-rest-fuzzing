@@ -151,4 +151,82 @@ export class ZodSchemaUtility {
         path: ['discount_price'],
         message: 'Must be less than or equal to regular_price',
       })
+
+  static userCreatePartialZodValidationSchema = z.object({
+    first_name: z.string(),
+    last_name: z.string(),
+    email: z.string(),
+    phone_code: z.string(),
+    phone_number: z.string(),
+  })
+
+  private static addressCreatePartialZodValidationSchema = z.object({
+    street: z.string(),
+    city: z.string(),
+    country: z.string(),
+    postal_code: z.string(),
+  })
+
+  private static shippingCreatePartialZodValidationSchema = z.object({
+    description: z.string(),
+    charge: z.coerce.number(),
+    free: z.coerce.boolean().optional(),
+    estimated_days: z.coerce.number().int(),
+  })
+
+  static userAddrCreatePartialZodValidationSchema =
+    this.userCreatePartialZodValidationSchema.extend({
+      address: this.addressCreatePartialZodValidationSchema,
+    })
+
+  static userAddrProdCreatePartialZodValidationSchema =
+    this.userCreatePartialZodValidationSchema.extend({
+      addresses: z
+        .array(this.addressCreatePartialZodValidationSchema)
+        .nonempty(),
+      product: this.productCreatePartialZodValidationSchema,
+    })
+
+  static userAddrProdShipCreatePartialZodValidationSchema =
+    this.userAddrProdCreatePartialZodValidationSchema.extend({
+      shipping: this.shippingCreatePartialZodValidationSchema,
+    })
+
+  static userCreateFullZodValidationSchema = z.object({
+    first_name: z.string().min(3).max(255),
+    last_name: z.string().min(3).max(255),
+    email: z.string().email().max(255),
+    phone_code: z.string().regex(/^[0-9]{1,3}$/),
+    phone_number: z.string().regex(/^[0-9]{4,12}$/),
+  })
+
+  private static addressCreateFullZodValidationSchema = z.object({
+    street: z.string().min(3).max(255),
+    city: z.string().min(3).max(255),
+    country: z.string().min(3).max(255),
+    postal_code: z.string().regex(/^[0-9]{5}$/),
+  })
+
+  private static shippingCreateFullZodValidationSchema = z.object({
+    description: z.string().min(3).max(1000),
+    charge: z.coerce.number().nonnegative(),
+    free: z.coerce.boolean().optional(),
+    estimated_days: z.coerce.number().int().nonnegative().lte(8),
+  })
+
+  static userAddrCreateFullZodValidationSchema =
+    this.userCreateFullZodValidationSchema.extend({
+      address: this.addressCreateFullZodValidationSchema,
+    })
+
+  static userAddrProdCreateFullZodValidationSchema =
+    this.userCreateFullZodValidationSchema.extend({
+      addresses: z.array(this.addressCreateFullZodValidationSchema).nonempty(),
+      product: this.productCreateFullZodValidationRefinedSchema,
+    })
+
+  static userAddrProdShipCreateFullZodValidationSchema =
+    this.userAddrProdCreateFullZodValidationSchema.extend({
+      shipping: this.shippingCreateFullZodValidationSchema,
+    })
 }

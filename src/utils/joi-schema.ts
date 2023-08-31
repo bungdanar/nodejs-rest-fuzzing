@@ -5,7 +5,15 @@ import {
   ProductCreatePayload,
   ProductTagCategoryCouponCreatePayload,
   ProductTagCategoryCreatePayload,
+  ShippingCreatePayload,
 } from '../data-type/product'
+import {
+  AddressCreatePayload,
+  UserAddressCreatePayload,
+  UserAddressProductCreatePayload,
+  UserAddressProductShippingCreatePayload,
+  UserCreatePayload,
+} from '../data-type/user'
 
 export class JoiSchemaUtility {
   private static plainProductCreatePartialJoiValidation: Partial<
@@ -44,6 +52,34 @@ export class JoiSchemaUtility {
     max_usage: Joi.number().integer().required(),
     start_date: Joi.date().iso().required(),
     end_date: Joi.date().iso().required(),
+  }
+
+  private static plainUserCreatePartialJoiValidation: Partial<
+    Record<keyof UserCreatePayload, Joi.Schema>
+  > = {
+    first_name: Joi.string().required(),
+    last_name: Joi.string().required(),
+    email: Joi.string().required(),
+    phone_code: Joi.string().required(),
+    phone_number: Joi.string().required(),
+  }
+
+  private static plainAddressCreatePartialJoiValidation: Partial<
+    Record<keyof AddressCreatePayload, Joi.Schema>
+  > = {
+    street: Joi.string().required(),
+    city: Joi.string().required(),
+    country: Joi.string().required(),
+    postal_code: Joi.string().required(),
+  }
+
+  private static plainShippingCreatePartialJoiValidation: Partial<
+    Record<keyof ShippingCreatePayload, Joi.Schema>
+  > = {
+    description: Joi.string().required(),
+    charge: Joi.number().required(),
+    free: Joi.boolean(),
+    estimated_days: Joi.number().integer().required(),
   }
 
   private static plainProductCreateFullJoiValidation: Partial<
@@ -88,6 +124,40 @@ export class JoiSchemaUtility {
     end_date: Joi.date().iso().min(Joi.ref('start_date')).required(),
   }
 
+  private static plainUserCreateFullJoiValidation: Partial<
+    Record<keyof UserCreatePayload, Joi.Schema>
+  > = {
+    first_name: Joi.string().min(3).max(255).required(),
+    last_name: Joi.string().min(3).max(255).required(),
+    email: Joi.string().email().max(255).required(),
+    phone_code: Joi.string()
+      .pattern(/^[0-9]{1,3}$/)
+      .required(),
+    phone_number: Joi.string()
+      .pattern(/^[0-9]{4,12}$/)
+      .required(),
+  }
+
+  private static plainAddressCreateFullJoiValidation: Partial<
+    Record<keyof AddressCreatePayload, Joi.Schema>
+  > = {
+    street: Joi.string().min(3).max(255).required(),
+    city: Joi.string().min(3).max(255).required(),
+    country: Joi.string().min(3).max(255).required(),
+    postal_code: Joi.string()
+      .pattern(/^[0-9]{5}$/)
+      .required(),
+  }
+
+  private static plainShippingCreateFullJoiValidation: Partial<
+    Record<keyof ShippingCreatePayload, Joi.Schema>
+  > = {
+    description: Joi.string().min(3).max(1000).required(),
+    charge: Joi.number().precision(4).min(0).required(),
+    free: Joi.boolean(),
+    estimated_days: Joi.number().integer().min(0).max(8).required(),
+  }
+
   static productCreatePartialJoiValidationSchema =
     Joi.object<ProductCreatePayload>({
       ...this.plainProductCreatePartialJoiValidation,
@@ -122,6 +192,51 @@ export class JoiSchemaUtility {
         .required(),
     })
 
+  static userCreatePartialJoiValidationSchema = Joi.object<UserCreatePayload>({
+    ...this.plainUserCreatePartialJoiValidation,
+  }).required()
+
+  static userAddrCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      address: Joi.object<AddressCreatePayload>({
+        ...this.plainAddressCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressProductCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreatePartialJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdShipCreatePartialJoiValidationSchema =
+    Joi.object<UserAddressProductShippingCreatePayload>({
+      ...this.plainUserCreatePartialJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreatePartialJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreatePartialJoiValidation,
+      }).required(),
+      shipping: Joi.object<ShippingCreatePayload>({
+        ...this.plainShippingCreatePartialJoiValidation,
+      }).required(),
+    }).required()
+
   static productCreateFullJoiValidationSchema =
     Joi.object<ProductCreatePayload>({
       ...this.plainProductCreateFullJoiValidation,
@@ -155,4 +270,49 @@ export class JoiSchemaUtility {
         )
         .required(),
     })
+
+  static userCreateFullJoiValidationSchema = Joi.object<UserCreatePayload>({
+    ...this.plainUserCreateFullJoiValidation,
+  }).required()
+
+  static userAddrCreateFullJoiValidationSchema =
+    Joi.object<UserAddressCreatePayload>({
+      ...this.plainUserCreateFullJoiValidation,
+      address: Joi.object<AddressCreatePayload>({
+        ...this.plainAddressCreateFullJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdCreateFullJoiValidationSchema =
+    Joi.object<UserAddressProductCreatePayload>({
+      ...this.plainUserCreateFullJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreateFullJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreateFullJoiValidation,
+      }).required(),
+    }).required()
+
+  static userAddrProdShipCreateFullJoiValidationSchema =
+    Joi.object<UserAddressProductShippingCreatePayload>({
+      ...this.plainUserCreateFullJoiValidation,
+      addresses: Joi.array()
+        .items(
+          Joi.object<AddressCreatePayload>({
+            ...this.plainAddressCreateFullJoiValidation,
+          }).required()
+        )
+        .required(),
+      product: Joi.object<ProductCreatePayload>({
+        ...this.plainProductCreateFullJoiValidation,
+      }).required(),
+      shipping: Joi.object<ShippingCreatePayload>({
+        ...this.plainShippingCreateFullJoiValidation,
+      }).required(),
+    }).required()
 }
