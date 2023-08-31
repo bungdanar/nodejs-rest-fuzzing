@@ -160,6 +160,18 @@ export class ZodSchemaUtility {
     phone_number: z.string(),
   })
 
+  private static addressCreatePartialZodValidationSchema = z.object({
+    street: z.string(),
+    city: z.string(),
+    country: z.string(),
+    postal_code: z.string(),
+  })
+
+  static userAddrCreatePartialZodValidationSchema =
+    this.userCreatePartialZodValidationSchema.extend({
+      address: this.addressCreatePartialZodValidationSchema,
+    })
+
   static userCreateFullZodValidationSchema = z.object({
     first_name: z.string().min(3).max(255),
     last_name: z.string().min(3).max(255),
@@ -167,4 +179,16 @@ export class ZodSchemaUtility {
     phone_code: z.string().regex(/^[0-9]{1,3}$/),
     phone_number: z.string().regex(/^[0-9]{4,12}$/),
   })
+
+  private static addressCreateFullZodValidationSchema = z.object({
+    street: z.string().min(3).max(255),
+    city: z.string().min(3).max(255),
+    country: z.string().min(3).max(255),
+    postal_code: z.string().regex(/^[0-9]{5}$/),
+  })
+
+  static userAddrCreateFullZodValidationSchema =
+    this.userCreateFullZodValidationSchema.extend({
+      address: this.addressCreateFullZodValidationSchema,
+    })
 }
