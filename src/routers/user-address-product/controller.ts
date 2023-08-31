@@ -3,6 +3,7 @@ import { Database } from '../../utils/database'
 import { UserService } from '../../utils/user-service'
 import { UserAddrProdValidator } from './validator'
 import { JoiValidationError } from '../../errors/joi-validation-err'
+import { ZodValidationError } from '../../errors/zod-validation-err'
 
 export class UserAddressProductController {
   static create = async (req: Request, res: Response) => {
@@ -55,6 +56,53 @@ export class UserAddressProductController {
     try {
       const user = await UserService.createWithAddressProduct(
         value,
+        transaction
+      )
+
+      await transaction.commit()
+      return res.status(201).send(user)
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+
+  static createWithPartialZodValidation = async (
+    req: Request,
+    res: Response
+  ) => {
+    const validationResult =
+      UserAddrProdValidator.partialValidateCreatePayloadWithZod(req.body)
+
+    if (!validationResult.success)
+      throw new ZodValidationError(validationResult.error)
+
+    const transaction = await Database.getTransaction()
+    try {
+      const user = await UserService.createWithAddressProduct(
+        validationResult.data,
+        transaction
+      )
+
+      await transaction.commit()
+      return res.status(201).send(user)
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+
+  static createWithFullZodValidation = async (req: Request, res: Response) => {
+    const validationResult =
+      UserAddrProdValidator.fullValidateCreatePayloadWithZod(req.body)
+
+    if (!validationResult.success)
+      throw new ZodValidationError(validationResult.error)
+
+    const transaction = await Database.getTransaction()
+    try {
+      const user = await UserService.createWithAddressProduct(
+        validationResult.data,
         transaction
       )
 

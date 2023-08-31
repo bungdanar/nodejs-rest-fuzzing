@@ -172,6 +172,14 @@ export class ZodSchemaUtility {
       address: this.addressCreatePartialZodValidationSchema,
     })
 
+  static userAddrProdCreatePartialZodValidationSchema =
+    this.userCreatePartialZodValidationSchema.extend({
+      addresses: z
+        .array(this.addressCreatePartialZodValidationSchema)
+        .nonempty(),
+      product: this.productCreatePartialZodValidationSchema,
+    })
+
   static userCreateFullZodValidationSchema = z.object({
     first_name: z.string().min(3).max(255),
     last_name: z.string().min(3).max(255),
@@ -190,5 +198,11 @@ export class ZodSchemaUtility {
   static userAddrCreateFullZodValidationSchema =
     this.userCreateFullZodValidationSchema.extend({
       address: this.addressCreateFullZodValidationSchema,
+    })
+
+  static userAddrProdCreateFullZodValidationSchema =
+    this.userCreateFullZodValidationSchema.extend({
+      addresses: z.array(this.addressCreateFullZodValidationSchema).nonempty(),
+      product: this.productCreateFullZodValidationRefinedSchema,
     })
 }
