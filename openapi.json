@@ -697,6 +697,110 @@
           }
         }
       },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "pattern": "^[A-Z0-9._%-]+@[A-Z0-9.-]+.[A-Z]{2,4}$"
+          },
+          "phone_code": {
+            "type": "string",
+            "pattern": "^[0-9]{1,3}$"
+          },
+          "phone_number": {
+            "type": "string",
+            "pattern": "^[0-9]{4,12}$"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AddressResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postal_code": {
+            "type": "string",
+            "pattern": "^[0-9]{5}$"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ShippingResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "charge": {
+            "type": "number",
+            "format": "float"
+          },
+          "free": {
+            "type": "boolean"
+          },
+          "estimated_days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "product_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "ProductTagCategoryResponse": {
         "type": "object",
         "allOf": [
