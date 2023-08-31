@@ -167,6 +167,13 @@ export class ZodSchemaUtility {
     postal_code: z.string(),
   })
 
+  private static shippingCreatePartialZodValidationSchema = z.object({
+    description: z.string(),
+    charge: z.coerce.number(),
+    free: z.coerce.boolean().optional(),
+    estimated_days: z.coerce.number().int(),
+  })
+
   static userAddrCreatePartialZodValidationSchema =
     this.userCreatePartialZodValidationSchema.extend({
       address: this.addressCreatePartialZodValidationSchema,
@@ -178,6 +185,11 @@ export class ZodSchemaUtility {
         .array(this.addressCreatePartialZodValidationSchema)
         .nonempty(),
       product: this.productCreatePartialZodValidationSchema,
+    })
+
+  static userAddrProdShipCreatePartialZodValidationSchema =
+    this.userAddrProdCreatePartialZodValidationSchema.extend({
+      shipping: this.shippingCreatePartialZodValidationSchema,
     })
 
   static userCreateFullZodValidationSchema = z.object({
@@ -195,6 +207,13 @@ export class ZodSchemaUtility {
     postal_code: z.string().regex(/^[0-9]{5}$/),
   })
 
+  private static shippingCreateFullZodValidationSchema = z.object({
+    description: z.string().min(3).max(1000),
+    charge: z.coerce.number().nonnegative(),
+    free: z.coerce.boolean().optional(),
+    estimated_days: z.coerce.number().int().nonnegative().lte(8),
+  })
+
   static userAddrCreateFullZodValidationSchema =
     this.userCreateFullZodValidationSchema.extend({
       address: this.addressCreateFullZodValidationSchema,
@@ -204,5 +223,10 @@ export class ZodSchemaUtility {
     this.userCreateFullZodValidationSchema.extend({
       addresses: z.array(this.addressCreateFullZodValidationSchema).nonempty(),
       product: this.productCreateFullZodValidationRefinedSchema,
+    })
+
+  static userAddrProdShipCreateFullZodValidationSchema =
+    this.userAddrProdCreateFullZodValidationSchema.extend({
+      shipping: this.shippingCreateFullZodValidationSchema,
     })
 }

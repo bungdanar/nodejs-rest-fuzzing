@@ -23,10 +23,18 @@ switch (Environment.APP_ENV.VALIDATION) {
   }
 
   case VALIDATION_MODE.ZOD_PARTIAL: {
+    router.post(
+      '/',
+      UserAddressProductShippingController.createWithPartialZodValidation
+    )
     break
   }
 
   case VALIDATION_MODE.ZOD_FULL: {
+    router.post(
+      '/',
+      UserAddressProductShippingController.createWithFullZodValidation
+    )
     break
   }
 
