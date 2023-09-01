@@ -1,15 +1,33 @@
 version: '3'
 
+networks:
+  rest-fuzzing:
+    driver: bridge
+
 services:
-  web-api:
-    image: bungdanar/nodejs-rest-fuzzing
-    environment:
-      - TZ=Asia/Jakarta
+  db:
+    image: bungdanar/mysql-rest-fuzzing
     restart: 'no'
-    build: ./
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    networks:
+      - rest-fuzzing
+
+  webapi:
+    image: bungdanar/nodejs-rest-fuzzing
+    depends_on:
+      - db
+    restart: 'no'
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
     volumes:
       - './logs:/usr/src/app/logs'
     env_file:
       - .env
+    networks:
+      - rest-fuzzing
     ports:
       - '${PORT}:${PORT}'
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm run start:prod'
