@@ -9,3 +9,13 @@ export const resTimeLogger = winston.createLogger({
     }),
   ],
 })
+
+export const err500Logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.simple(),
+  transports: [
+    new winston.transports.File({
+      filename: 'logs/err500.log',
+    }),
+  ],
+})
