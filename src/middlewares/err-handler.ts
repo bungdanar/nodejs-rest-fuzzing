@@ -3,6 +3,7 @@ import { CustomError } from '../errors/custom-err'
 import { getErrorMessage } from '../utils/get-err-message'
 import { err500Logger } from '../utils/logger'
 import { Environment } from '../utils/environment'
+import { BaseError as SequelizeBaseError } from 'sequelize'
 
 export const errHandler = (
   err: unknown,
@@ -18,7 +19,11 @@ export const errHandler = (
   // Pass all custom errors
   // Should log to logging service
   // console.error(getErrorMessage(err))
-  const errMsg = getErrorMessage(err)
+  let errMsg = getErrorMessage(err)
+  if (err instanceof SequelizeBaseError) {
+    errMsg = errMsg.split('\n')[0].split(',')[0]
+  }
+
   const statusCode = 500
 
   console.log('\x1b[31m%s\x1b[0m', errMsg)
