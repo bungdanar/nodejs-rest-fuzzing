@@ -21,7 +21,7 @@ export const errHandler = (
   // console.error(getErrorMessage(err))
   let errMsg = getErrorMessage(err)
   if (err instanceof SequelizeBaseError) {
-    errMsg = errMsg.split('\n')[0].split(',')[0]
+    errMsg = errMsg.split('\n').join(' ')
   }
 
   const statusCode = 500
