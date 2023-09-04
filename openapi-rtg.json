@@ -1590,7 +1590,7 @@
           "description": "Se",
           "weight": -1000,
           "note": "Hi",
-          "published": "Yes publish"
+          "published": false
         }
       },
       "CorrectProductTagCategoryCreatePayload": {
@@ -1626,7 +1626,7 @@
           "description": "Se",
           "weight": -1000,
           "note": "Hi",
-          "published": "Yes publish",
+          "published": false,
           "tags": [
             "ta",
             "ta"
@@ -1688,7 +1688,7 @@
           "description": "Se",
           "weight": -1000,
           "note": "Hi",
-          "published": "Yes publish",
+          "published": false,
           "tags": [
             "ta",
             "ta"
@@ -1916,7 +1916,7 @@
           "shipping": {
             "description": "Pe",
             "charge": -50000,
-            "free": "It is free",
+            "free": true,
             "estimated_days": 80
           }
         }
