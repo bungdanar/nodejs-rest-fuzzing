@@ -20,11 +20,25 @@ export const errHandler = (
   // Should log to logging service
   // console.error(getErrorMessage(err))
   let errMsg = getErrorMessage(err)
+  let statusCode = 500
+
+  if (
+    err instanceof SyntaxError &&
+    'status' in err &&
+    err.status === 400 &&
+    'body' in err
+  ) {
+    statusCode = 400
+
+    return res.status(statusCode).send({
+      message: errMsg,
+      statusCode,
+    })
+  }
+
   if (err instanceof SequelizeBaseError) {
     errMsg = errMsg.split('\n').join(' ')
   }
-
-  const statusCode = 500
 
   console.log('\x1b[31m%s\x1b[0m', errMsg)
   err500Logger.info(
