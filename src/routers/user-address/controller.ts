@@ -85,9 +85,8 @@ export class UserAddressController {
   }
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
-    const validationResult = UserAddrValidator.fullValidateCreatePayloadWithZod(
-      req.body
-    )
+    const validationResult =
+      await UserAddrValidator.fullValidateCreatePayloadWithZod(req.body)
 
     if (!validationResult.success)
       throw new ZodValidationError(validationResult.error)

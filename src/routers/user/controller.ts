@@ -84,9 +84,8 @@ export class UserController {
   }
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
-    const validationResult = UserValidator.fullValidateCreatePayloadWithZod(
-      req.body
-    )
+    const validationResult =
+      await UserValidator.fullValidateCreatePayloadWithZod(req.body)
 
     if (!validationResult.success)
       throw new ZodValidationError(validationResult.error)

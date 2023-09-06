@@ -95,7 +95,9 @@ export class ProductTagCategoryController {
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
     const validationResult =
-      ProductTagCategoryValidator.fullValidateCreatePayloadWithZod(req.body)
+      await ProductTagCategoryValidator.fullValidateCreatePayloadWithZod(
+        req.body
+      )
 
     if (!validationResult.success)
       throw new ZodValidationError(validationResult.error)

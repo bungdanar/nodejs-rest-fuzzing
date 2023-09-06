@@ -54,9 +54,8 @@ export class ProductController {
   }
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
-    const validationResult = ProductValidator.fullValidateCreatePayloadWithZod(
-      req.body
-    )
+    const validationResult =
+      await ProductValidator.fullValidateCreatePayloadWithZod(req.body)
 
     if (!validationResult.success) {
       throw new ZodValidationError(validationResult.error)

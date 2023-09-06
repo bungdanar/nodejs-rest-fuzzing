@@ -20,9 +20,9 @@ export class UserAddrProdShipValidator {
     return schema.safeParse(payload)
   }
 
-  static fullValidateCreatePayloadWithZod = (payload: any) => {
+  static fullValidateCreatePayloadWithZod = async (payload: any) => {
     const schema =
       ZodSchemaUtility.userAddrProdShipCreateFullZodValidationSchema
-    return schema.safeParse(payload)
+    return await schema.safeParseAsync(payload)
   }
 }
