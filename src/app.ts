@@ -3,6 +3,7 @@ import 'express-async-errors'
 import responseTime from 'response-time'
 import { json } from 'body-parser'
 import cors from 'cors'
+import morgan from 'morgan'
 import { errHandler } from './middlewares/err-handler'
 import { productRouter } from './routers/product/router'
 import { productTagCategoryRouter } from './routers/product-tag-category/router'
@@ -20,6 +21,7 @@ app.use(
     origin: '*',
   })
 )
+app.use(morgan('combined'))
 app.use(json())
 app.use(resTime)
 
