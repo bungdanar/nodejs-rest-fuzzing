@@ -101,7 +101,7 @@ export class ProductTagCategoryCouponController {
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
     const validationResult =
-      await ProductTagCategoryCouponValidator.fullValidateCreatePayloadWithZod(
+      ProductTagCategoryCouponValidator.fullValidateCreatePayloadWithZod(
         req.body
       )
 

@@ -94,7 +94,7 @@ export class UserAddressProductController {
 
   static createWithFullZodValidation = async (req: Request, res: Response) => {
     const validationResult =
-      await UserAddrProdValidator.fullValidateCreatePayloadWithZod(req.body)
+      UserAddrProdValidator.fullValidateCreatePayloadWithZod(req.body)
 
     if (!validationResult.success)
       throw new ZodValidationError(validationResult.error)

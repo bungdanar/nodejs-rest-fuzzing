@@ -23,10 +23,10 @@ export class ProductTagCategoryCouponValidator {
     return schema.safeParse(payload)
   }
 
-  static fullValidateCreatePayloadWithZod = async (payload: any) => {
+  static fullValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
       ZodSchemaUtility.productTagCategoryCouponCreateFullZodValidationSchema
 
-    return await schema.safeParseAsync(payload)
+    return schema.safeParse(payload)
   }
 }
