@@ -18,13 +18,13 @@ export class ProductTagCategoryValidator {
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
-      ZodSchemaUtility.productTagCategoryCreatePartialZodValidationSchema
+      ZodSchemaUtility.productTagCategoryCreatePartialZodValidationSchema()
 
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.productTagCategoryFullZodValidationSchema
+    const schema = ZodSchemaUtility.productTagCategoryFullZodValidationSchema()
 
     return schema.safeParse(payload)
   }

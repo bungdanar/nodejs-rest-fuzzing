@@ -18,14 +18,14 @@ export class ProductTagCategoryCouponValidator {
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
-      ZodSchemaUtility.productTagCategoryCouponCreatePartialZodValidationSchema
+      ZodSchemaUtility.productTagCategoryCouponCreatePartialZodValidationSchema()
 
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
-      ZodSchemaUtility.productTagCategoryCouponCreateFullZodValidationSchema
+      ZodSchemaUtility.productTagCategoryCouponCreateFullZodValidationSchema()
 
     return schema.safeParse(payload)
   }

@@ -16,13 +16,13 @@ export class UserAddrProdShipValidator {
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
-      ZodSchemaUtility.userAddrProdShipCreatePartialZodValidationSchema
+      ZodSchemaUtility.userAddrProdShipCreatePartialZodValidationSchema()
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
     const schema =
-      ZodSchemaUtility.userAddrProdShipCreateFullZodValidationSchema
+      ZodSchemaUtility.userAddrProdShipCreateFullZodValidationSchema()
     return schema.safeParse(payload)
   }
 }

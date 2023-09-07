@@ -13,12 +13,12 @@ export class UserValidator {
   }
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.userCreatePartialZodValidationSchema
+    const schema = ZodSchemaUtility.userCreatePartialZodValidationSchema()
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.userCreateFullZodValidationSchema
+    const schema = ZodSchemaUtility.userCreateFullZodValidationSchema()
     return schema.safeParse(payload)
   }
 }

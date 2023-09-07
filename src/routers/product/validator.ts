@@ -13,12 +13,13 @@ export class ProductValidator {
   }
 
   static partialValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.productCreatePartialZodValidationSchema
+    const schema = ZodSchemaUtility.productCreatePartialZodValidationSchema()
     return schema.safeParse(payload)
   }
 
   static fullValidateCreatePayloadWithZod = (payload: any) => {
-    const schema = ZodSchemaUtility.productCreateFullZodValidationRefinedSchema
+    const schema =
+      ZodSchemaUtility.productCreateFullZodValidationRefinedSchema()
     return schema.safeParse(payload)
   }
 }
