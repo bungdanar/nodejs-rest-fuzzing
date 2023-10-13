@@ -6,3 +6,16 @@ This application has 3 types of validation modes, namely no validation, partial 
 This application uses the [Joi](https://joi.dev/) and [Zod](https://zod.dev/) libraries to validate input payloads.
 
 Currently, the application <b>has no authentication and authorization mechanisms</b> and is only used for research and testing purposes.
+
+## Functionality
+This application is a simple e-commerce application that has 7 endpoints as follows:
+
+| Method | Endpoint                       | Description                                                                                                                      |
+|:------:|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+|  POST  | /product                       | Create a new product                                                                                                             |
+|  POST  | /product-tag-category          | Create a new product along with tags and category for that product                                                               |
+|  POST  | /product-tag-category-coupon   | Create a new product along with tags, categories and coupons for that product                                                    |
+|  POST  | /user                          | Create a new user                                                                                                                |
+|  POST  | /user-address                  | Create a new user along with the address for that user                                                                           |
+|  POST  | /user-address-product          | Create a new user along with the user’s addresses and product sold by that user                                                  |
+|  POST  | /user-address-product-shipping | Create a new user along with the user’s addresses and product (along with the shipping method for the product) sold by that user |
