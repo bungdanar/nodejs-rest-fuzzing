@@ -37,6 +37,8 @@ In the `.env` file, there is a `VALIDATION` environment variable that can be fil
 
 If you run this application with docker compose then you do not need to change the values of the `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` environment variables. You may want to change the value of the `PORT` environment variable as the default value is 5000.
 
+To run the application, you can build docker image first with command `docker compose build` or pull the docker image of this application from the docker hub with command `docker compose pull`. Next, run the application with command `docker compose up`.
+
 ## Log Files
 The application generates 2 log files to record unhandled/unexpected errors and to record application response time. The two log files are as follows:
 
@@ -44,8 +46,6 @@ The application generates 2 log files to record unhandled/unexpected errors and 
 |-------------------|----------------------------------|
 | logs/err500.log   | logs unhandled/unexpected errors |
 | logs/res-time.log | logs application response time   |
-
-To run the application, you can build docker image first with command `docker compose build` or pull the docker image of this application from the docker hub with command `docker compose pull`. Next, run the application with command `docker compose up`.
 
 ## Fuzzing Experiment
 If you want to conduct fuzzing experiments on this application, you can use several fuzzing tools such as [Restler](https://github.com/microsoft/restler-fuzzer), [EvoMaster](https://github.com/EMResearch/EvoMaster), [RestTestGen](https://github.com/SeUniVr/RestTestGen), or other tools that can perform fuzzing on RESTful API.
