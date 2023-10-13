@@ -19,3 +19,22 @@ This application is a simple e-commerce application that has 7 endpoints as foll
 |  POST  | /user-address                  | Create a new user along with the address for that user                                                                           |
 |  POST  | /user-address-product          | Create a new user along with the user’s addresses and product sold by that user                                                  |
 |  POST  | /user-address-product-shipping | Create a new user along with the user’s addresses and product (along with the shipping method for the product) sold by that user |
+
+## How to Run
+I highly recommend running this application using docker compose. The compose file in this code base will run the application server as well as run the MySQL database server so you no longer need to setup the database server manually.
+
+First, create an `.env` file then copy and paste the contents of the `.env.example` file into the `.env` file.
+
+In the `.env` file, there is a `VALIDATION` environment variable that can be filled with 1 of the 5 available validation modes. An explanation of the validation mode value is as follows:
+
+| VALIDATION  | Description                                                               |
+|-------------|---------------------------------------------------------------------------|
+| no          | Running the application without input validation mechanism                |
+| joi-partial | Running the application with partial input validation mechanism using Joi |
+| joi-full    | Running the application with full input validation mechanism using Joi    |
+| zod-partial | Running the application with partial input validation mechanism using Zod |
+| zod-full    | Running the application with full input validation mechanism using Zod    |
+
+If you run this application with docker compose then you do not need to change the values of the `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` environment variables. You may want to change the value of the `PORT` environment variable as the default value is 5000.
+
+To run the application, you can build docker image first with command `docker compose build` or pull the docker image of this application from the docker hub with command `docker compose pull`. Next, run the application with command `docker compose up`.
