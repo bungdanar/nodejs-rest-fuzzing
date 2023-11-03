@@ -6,22 +6,22 @@ import { VALIDATION_MODE } from '../../data-type/validation-mode'
 const router = express.Router()
 
 switch (Environment.APP_ENV.VALIDATION) {
-  case VALIDATION_MODE.JOI_PARTIAL: {
+  case VALIDATION_MODE.JOI_LOW: {
     router.post('/', ProductController.createWithPartialJoiValidation)
     break
   }
 
-  case VALIDATION_MODE.JOI_FULL: {
+  case VALIDATION_MODE.JOI_MEDIUM: {
     router.post('/', ProductController.createWithFullJoiValidation)
     break
   }
 
-  case VALIDATION_MODE.ZOD_PARTIAL: {
+  case VALIDATION_MODE.ZOD_LOW: {
     router.post('/', ProductController.createWithPartialZodValidation)
     break
   }
 
-  case VALIDATION_MODE.ZOD_FULL: {
+  case VALIDATION_MODE.ZOD_MEDIUM: {
     router.post('/', ProductController.createWithFullZodValidation)
     break
   }

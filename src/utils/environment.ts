@@ -15,11 +15,13 @@ interface AppEnv {
 
 export class Environment {
   private static readonly ALLOWED_VALIDATION_MODE = [
-    'no',
-    'joi-partial',
-    'joi-full',
-    'zod-partial',
-    'zod-full',
+    'none',
+    'joi-low',
+    'joi-medium',
+    'joi-high',
+    'zod-low',
+    'zod-medium',
+    'zod-high',
   ]
 
   static readonly APP_ENV: AppEnv = {
