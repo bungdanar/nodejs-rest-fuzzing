@@ -37,7 +37,7 @@ export class ZodSchemaUtility {
       discount_value: z.coerce.number().nonnegative().lte(100),
       discount_type: z.string().min(3).max(255),
       times_used: z.coerce.number().int().nonnegative().optional(),
-      max_usage: z.coerce.number().int().nonnegative(),
+      max_usage: z.coerce.number().int().nonnegative().lte(9999),
       start_date: z.coerce.date(),
       end_date: z.coerce.date(),
     })
@@ -98,7 +98,7 @@ export class ZodSchemaUtility {
   static productCreateFullZodValidationCoreSchema = z.object({
     name: z.string().min(3).max(255),
     sku: z.string().min(3).max(255),
-    regular_price: z.coerce.number().nonnegative(),
+    regular_price: z.coerce.number().nonnegative().lt(1e15),
     discount_price: z.coerce.number().nonnegative(),
     quantity: z.coerce.number().int().nonnegative().lte(9999),
     description: z.string().min(3).max(1000),
@@ -114,7 +114,7 @@ export class ZodSchemaUtility {
     .object({
       name: z.string().min(3).max(255),
       sku: z.string().min(3).max(255),
-      regular_price: z.coerce.number().nonnegative(),
+      regular_price: z.coerce.number().nonnegative().lt(1e15),
       discount_price: z.coerce.number().nonnegative(),
       quantity: z.coerce.number().int().nonnegative().lte(9999),
       description: z.string().min(3).max(1000),
@@ -209,7 +209,7 @@ export class ZodSchemaUtility {
 
   private static shippingCreateFullZodValidationSchema = z.object({
     description: z.string().min(3).max(1000),
-    charge: z.coerce.number().nonnegative(),
+    charge: z.coerce.number().nonnegative().lt(1e15),
     free: z.coerce.boolean().optional(),
     estimated_days: z.coerce.number().int().nonnegative().lte(8),
   })

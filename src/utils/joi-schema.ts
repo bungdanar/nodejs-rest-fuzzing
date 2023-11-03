@@ -87,7 +87,7 @@ export class JoiSchemaUtility {
   > = {
     name: Joi.string().min(3).max(255).required(),
     sku: Joi.string().min(3).max(255).required(),
-    regular_price: Joi.number().precision(4).min(0).required(),
+    regular_price: Joi.number().precision(4).min(0).less(1e15).required(),
     discount_price: Joi.number()
       .precision(4)
       .min(0)
@@ -119,7 +119,7 @@ export class JoiSchemaUtility {
     discount_value: Joi.number().precision(2).min(0).max(100).required(),
     discount_type: Joi.string().min(3).max(255).required(),
     times_used: Joi.number().integer().min(0).max(Joi.ref('max_usage')),
-    max_usage: Joi.number().integer().min(0).required(),
+    max_usage: Joi.number().integer().min(0).max(9999).required(),
     start_date: Joi.date().iso().required(),
     end_date: Joi.date().iso().min(Joi.ref('start_date')).required(),
   }
@@ -153,7 +153,7 @@ export class JoiSchemaUtility {
     Record<keyof ShippingCreatePayload, Joi.Schema>
   > = {
     description: Joi.string().min(3).max(1000).required(),
-    charge: Joi.number().precision(4).min(0).required(),
+    charge: Joi.number().precision(4).min(0).less(1e15).required(),
     free: Joi.boolean(),
     estimated_days: Joi.number().integer().min(0).max(8).required(),
   }
