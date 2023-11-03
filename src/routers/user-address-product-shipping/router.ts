@@ -17,6 +17,14 @@ switch (Environment.APP_ENV.VALIDATION) {
   case VALIDATION_MODE.JOI_MEDIUM: {
     router.post(
       '/',
+      UserAddressProductShippingController.createWithPartialJoiValidation
+    )
+    break
+  }
+
+  case VALIDATION_MODE.JOI_HIGH: {
+    router.post(
+      '/',
       UserAddressProductShippingController.createWithFullJoiValidation
     )
     break
@@ -31,6 +39,14 @@ switch (Environment.APP_ENV.VALIDATION) {
   }
 
   case VALIDATION_MODE.ZOD_MEDIUM: {
+    router.post(
+      '/',
+      UserAddressProductShippingController.createWithPartialZodValidation
+    )
+    break
+  }
+
+  case VALIDATION_MODE.ZOD_HIGH: {
     router.post(
       '/',
       UserAddressProductShippingController.createWithFullZodValidation
