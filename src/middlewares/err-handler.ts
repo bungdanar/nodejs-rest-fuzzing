@@ -37,7 +37,7 @@ export const errHandler = (
   }
 
   if (err instanceof SequelizeBaseError) {
-    errMsg = errMsg.split('\n').join(' ')
+    errMsg = errMsg.split('\n')[0]
   }
 
   console.log('\x1b[31m%s\x1b[0m', errMsg)
